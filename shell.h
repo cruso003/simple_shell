@@ -25,9 +25,9 @@
  */
 typedef struct Alias
 {
-    char *name;
-    char *value;
-    struct Alias *next;
+	char *name;
+	char *value;
+	struct Alias *next;
 } Alias;
 
 /** Function to read user input*/
