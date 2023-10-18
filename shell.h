@@ -30,6 +30,9 @@ typedef struct Alias
 	struct Alias *next;
 } Alias;
 
+/** Global variable*/
+extern char **environ;
+
 /** Function to read user input*/
 ssize_t get_user_input(char **lineptr, size_t *n);
 
@@ -90,10 +93,10 @@ int handle_cd_command(char **tokens);
 /** Function to handle environment printing*/
 int handle_env_command(void);
 
-/** Function to handle the separator ";"*/
-void tokenize_and_execute_commands(char *input);
-/** Function to trim the input*/
-char *trim(char *str);
+/** Custom strcmp function*/
 int _strcmp(const char *s1, char *s2);
+
+/** Custom strdup function*/
 char *_strdup(const char *str);
+
 #endif
