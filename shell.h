@@ -52,10 +52,10 @@ ssize_t custom_getline(char **lineptr, size_t *n);
 void *custom_realloc(void *ptr, size_t size);
 
 /** Custom function for strlen*/
-int _strlen(char *s);
+int _strlen(const char *s);
 
 /** Custom function for strcpy*/
-char *_strcpy(char *dest, char *src);
+char *_strcpy(char *dest, const char *src);
 
 /** Function to copy memory from src to dest*/
 char *_memcpy(char *dest, char *src, unsigned int n);
@@ -92,13 +92,8 @@ int handle_env_command(void);
 
 /** Function to handle the separator ";"*/
 void tokenize_and_execute_commands(char *input);
-
 /** Function to trim the input*/
 char *trim(char *str);
-
-/** Custom function for string comparing*/
-int _strcmp(char *s1, char *s2);
-
-/** Custom function for string duplicating*/
-char *_strdup(char *str);
+int _strcmp(const char *s1, char *s2);
+char *_strdup(const char *str);
 #endif
