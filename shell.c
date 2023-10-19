@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 		file = fopen(filename, "r");
 		if (file == NULL)
 		{
-			perror("fopen");
+			fprintf(stderr, "/hsh: 0: Can't open %s\n", filename);
 			return (EXIT_FAILURE);
 		}
 	}
