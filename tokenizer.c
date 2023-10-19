@@ -18,13 +18,31 @@ void execute_command(char **tokens)
 	else if (child_pid == 0)
 	{
 		char *command_name = tokens[0];
-		char *exec_path = find_full_path(command_name);
 		char *envp[] = {"TERM=xterm", NULL};
 
-		if (execve(exec_path, tokens, envp) == -1)
+		if (strchr(command_name, '/'))
 		{
-			perror("Command execution failed");
-			exit(EXIT_FAILURE);
+			if (execve(command_name, tokens, envp) == -1)
+			{
+				perror("Command execution failed");
+				exit(EXIT_FAILURE);
+			}
+		}
+		else
+		{
+			char *exec_path = find_full_path(command_name);
+
+			if (exec_path == NULL)
+			{
+				fprintf(stderr, "Command not found: %s\n", command_name);
+				exit(EXIT_FAILURE);
+			}
+
+			if (execve(exec_path, tokens, envp) == -1)
+			{
+				perror("Command execution failed");
+				exit(EXIT_FAILURE);
+			}
 		}
 	}
 	else
@@ -160,4 +178,3 @@ int evaluate_logical_expression(char **tokens)
 	}
 	return (1);
 }
-

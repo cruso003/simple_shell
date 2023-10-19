@@ -1,4 +1,5 @@
 #include "shell.h"
+
 /**
  * main - main function
  * @argc: number of arguments
@@ -7,23 +8,28 @@
  */
 int main(int argc, char **argv)
 {
-	char *filename = argv[1];
+	char *filename = NULL;
 	char *input = NULL;
 	size_t len = 0;
 	FILE *file;
 	char *replaced_input;
 
-	if (argc != 2)
+	if (argc == 2)
 	{
-		fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
+		filename = argv[1];
+		file = fopen(filename, "r");
+		if (file == NULL)
+		{
+			perror("fopen");
+			return (EXIT_FAILURE);
+		}
+	}
+	else if (argc > 2)
+	{
+		fprintf(stderr, "Usage: %s [<filename>]\n", argv[0]);
 		return (EXIT_FAILURE);
 	}
-	file = fopen(filename, "r");
-	if (file == NULL)
-	{
-		perror("fopen");
-		return (EXIT_FAILURE);
-	}
+
 	while (1)
 	{
 		ssize_t read = get_user_input(&input, &len);
@@ -42,7 +48,10 @@ int main(int argc, char **argv)
 		free(replaced_input);
 	}
 
-	fclose(file);
+	if (filename)
+	{
+		fclose(file);
+	}
 	free(input);
 
 	return (EXIT_SUCCESS);
