@@ -8,18 +8,35 @@
  */
 ssize_t get_user_input(char **lineptr, size_t *n)
 {
-	char *prompt = "$ ";
-	size_t read;
+	int is_terminal = isatty(STDIN_FILENO);
+	ssize_t read;
 
-	if (write(1, prompt, _strlen(prompt)) == -1)
+	if (is_terminal)
 	{
-		perror("write error");
-		return (-1);
+		char *prompt = "$ ";
+		if (write(1, prompt, _strlen(prompt)) == -1)
+		{
+			perror("write error");
+			return (-1);
+		}
 	}
-	read = getline(lineptr, n, stdin);
-	if (!read)
+
+	read = custom_getline(lineptr, n);
+
+	if (!is_terminal && read == -1)
 	{
-		return (-1);
+		return -1;
+	}
+
+	if (is_terminal && read == -1)
+	{
+		perror("getline error");
+	}
+
+	if (is_terminal && read > 0 && (*lineptr)[read - 1] == '\n')
+	{
+		(*lineptr)[read - 1] = '\0';
+		read--;
 	}
 	return (read);
 }

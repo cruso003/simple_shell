@@ -15,36 +15,53 @@ ssize_t custom_getline(char **lineptr, size_t *n)
 {
 	size_t line_length = 0;
 	char *line = NULL;
-	int c;
+	int c, is_terminal;
 
 	if (lineptr == NULL || n == NULL)
 	{
-		return (-1);
+		return -1;
 	}
 
-	if (buffer_position >= buffer_size)
-	{
-		ssize_t bytes_read = read(STDIN_FILENO, input_buffer, BUFFER_SIZE);
+	is_terminal = isatty(STDIN_FILENO);
 
-		if (bytes_read <= 0)
+	if (is_terminal)
+	{
+		if (buffer_position >= buffer_size)
 		{
-			return (bytes_read);
+			ssize_t bytes_read = read(STDIN_FILENO, input_buffer, BUFFER_SIZE);
+
+			if (bytes_read <= 0)
+			{
+				return bytes_read;
+			}
+			buffer_position = 0;
+			buffer_size = (size_t)bytes_read;
 		}
-		buffer_position = 0;
-		buffer_size = (size_t)bytes_read;
 	}
 
-	while (buffer_position < buffer_size)
+	while (1)
 	{
-		c = input_buffer[buffer_position++];
-		if (c == '\n' || c == '\0')
+		if (is_terminal)
+		{
+			c = input_buffer[buffer_position++];
+		}
+		else
+		{
+			c = getchar();
+		}
+
+		if (c == '\n' || c == EOF)
 		{
 			if (line_length > 0)
 			{
 				line[line_length] = '\0';
 				*lineptr = line;
 				*n = line_length;
-				return (line_length);
+				return line_length;
+			}
+			if (c == EOF)
+			{
+				return (-1);
 			}
 		}
 		else
