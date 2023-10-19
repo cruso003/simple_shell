@@ -22,7 +22,7 @@ ssize_t get_user_input(char **lineptr, size_t *n)
 		}
 	}
 
-	read = custom_getline(lineptr, n);
+	read = getline(lineptr, n, stdin);
 
 	if (!is_terminal && read == -1)
 	{
@@ -31,7 +31,7 @@ ssize_t get_user_input(char **lineptr, size_t *n)
 
 	if (is_terminal && read == -1)
 	{
-		perror("getline error");
+		return (-1);
 	}
 
 	if (is_terminal && read > 0 && (*lineptr)[read - 1] == '\n')
