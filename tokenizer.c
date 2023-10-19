@@ -57,21 +57,31 @@ void execute_command(char **tokens)
 void tokenize_string(char *input);
 void tokenize_string(char *input)
 {
+	char *trimmed_input = input;
 	char *token;
 	char *delim = " \t\n;";
-	char *input_cpy = _strdup(input);
 	char **tokens = malloc(sizeof(char *) * MAX_TOKENS);
 	int token_count = 0;
 	int i;
+	char *end;
 
-	if (!input_cpy || !tokens)
+	while (*trimmed_input == ' ' || *trimmed_input == '\t')
+	{
+		trimmed_input++;
+	}
+	end = trimmed_input + strlen(trimmed_input) - 1;
+	while (end > trimmed_input && (*end == ' ' || *end == '\t'))
+	{
+		*end = '\0';
+		end--;
+	}
+
+	if (!tokens)
 	{
 		perror("memory allocation failed");
-		free(input_cpy);
-		free(tokens);
 		exit(EXIT_FAILURE);
 	}
-	token = custom_strtok(input_cpy, delim);
+	token = custom_strtok(trimmed_input, delim);
 	while (token != NULL)
 	{
 		tokens[token_count] = _strdup(token);
@@ -98,7 +108,6 @@ void tokenize_string(char *input)
 		free(tokens[i]);
 	}
 	free(tokens);
-	free(input_cpy);
 }
 
 /**
