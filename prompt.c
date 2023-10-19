@@ -16,7 +16,7 @@ ssize_t get_user_input(char **lineptr, size_t *n)
 		perror("write error");
 		return (-1);
 	}
-	read = custom_getline(lineptr, n);
+	read = getline(lineptr, n, stdin);
 	if (!read)
 	{
 		return (-1);
