@@ -16,6 +16,7 @@
 #include <limits.h>
 
 #define MAX_TOKENS 128
+#define BUFFER_SIZE 1024
 
 /**
  * struct Alias - Structure to represent an alias

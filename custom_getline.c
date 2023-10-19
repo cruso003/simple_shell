@@ -1,5 +1,9 @@
 #include "shell.h"
 
+static char input_buffer[BUFFER_SIZE];
+static size_t buffer_position;
+static size_t buffer_size;
+
 /**
  * custom_getline - Custom getline function with operator support
  * @lineptr: pointer to the line
@@ -9,69 +13,64 @@
 ssize_t custom_getline(char **lineptr, size_t *n);
 ssize_t custom_getline(char **lineptr, size_t *n)
 {
-	ssize_t read = 0;
+	size_t line_length = 0;
+	char *line = NULL;
 	int c;
-	char *temp;
 
 	if (lineptr == NULL || n == NULL)
 	{
-		errno = EINVAL;
 		return (-1);
 	}
-	if (*lineptr == NULL || *n == 0)
-	{
-		*n = 128;
-		*lineptr = (char *)malloc(sizeof(*n));
-		if (*lineptr == NULL)
-		{
-			errno = ENOMEM;
-			return (-1);
-		}
-	}
-	while ((c = getchar()) != EOF)
-	{
-		if ((size_t)read >= *n)
-		{
-			*n += 128;
-			temp = (char *)custom_realloc(*lineptr, *n);
-			if (temp == NULL)
-			{
-				errno = ENOMEM;
-				return (-1);
-			}
-			*lineptr = temp;
-		}
-		(*lineptr)[read] = (char)c;
-		read++;
 
-		if (c == '\n' || c == ';')
-		{
-			(*lineptr)[read] = '\0';
-			return (read);
-		}
-		else if (c == '&' || c == '|')
-		{
-			int next_char = getchar();
-
-			if (next_char == c)
-			{
-				(*lineptr)[read] = c;
-				read++;
-				(*lineptr)[read] = c;
-				read++;
-				(*lineptr)[read] = '\0';
-				return (read);
-			}
-			else if (next_char != EOF)
-			{
-				ungetc(next_char, stdin);
-			}
-		}
-	}
-	if (read > 0)
+	if (buffer_position >= buffer_size)
 	{
-		(*lineptr)[read] = '\0';
-		return (read);
+		ssize_t bytes_read = read(STDIN_FILENO, input_buffer, BUFFER_SIZE);
+
+		if (bytes_read <= 0)
+		{
+			return (bytes_read);
+		}
+		buffer_position = 0;
+		buffer_size = (size_t)bytes_read;
 	}
-	return (0);
+
+	while (buffer_position < buffer_size)
+	{
+		c = input_buffer[buffer_position++];
+		if (c == '\n' || c == '\0')
+		{
+			if (line_length > 0)
+			{
+				line[line_length] = '\0';
+				*lineptr = line;
+				*n = line_length;
+				return (line_length);
+			}
+		}
+		else
+		{
+			if (line_length == 0)
+			{
+				line = (char *)malloc(2 * sizeof(char));
+				if (line == NULL)
+				{
+					return (-1);
+				}
+			}
+			else
+			{
+				char *temp = (char *)realloc(line, (line_length + 2) * sizeof(char));
+
+				if (temp == NULL)
+				{
+					free(line);
+					return (-1);
+				}
+				line = temp;
+			}
+			line[line_length++] = (char)c;
+		}
+	}
+
+	return (-1);
 }
