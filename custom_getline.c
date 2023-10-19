@@ -1,6 +1,7 @@
 #include "shell.h"
+
 /**
- * custom_getline - Custom getline function
+ * custom_getline - Custom getline function with operator support
  * @lineptr: pointer to the line
  * @n: number of characters to get from the line
  * Return: bytes read from the line
@@ -43,10 +44,28 @@ ssize_t custom_getline(char **lineptr, size_t *n)
 		(*lineptr)[read] = (char)c;
 		read++;
 
-		if (c == '\n')
+		if (c == '\n' || c == ';')
 		{
 			(*lineptr)[read] = '\0';
 			return (read);
+		}
+		else if (c == '&' || c == '|')
+		{
+			int next_char = getchar();
+
+			if (next_char == c)
+			{
+				(*lineptr)[read] = c;
+				read++;
+				(*lineptr)[read] = c;
+				read++;
+				(*lineptr)[read] = '\0';
+				return (read);
+			}
+			else if (next_char != EOF)
+			{
+				ungetc(next_char, stdin);
+			}
 		}
 	}
 	if (read > 0)
@@ -56,4 +75,3 @@ ssize_t custom_getline(char **lineptr, size_t *n)
 	}
 	return (0);
 }
-

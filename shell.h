@@ -45,9 +45,6 @@ char *replace_variables(const char *input);
 /** Function to handle built-in commands*/
 int handle_builtin_commands(char **tokens);
 
-/** Function to execute logical commands (e.g., && and ||)*/
-int evaluate_logical_expression(char **tokens);
-
 /** Custom getline function*/
 ssize_t custom_getline(char **lineptr, size_t *n);
 
