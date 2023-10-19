@@ -19,7 +19,7 @@ ssize_t custom_getline(char **lineptr, size_t *n)
 
 	if (lineptr == NULL || n == NULL)
 	{
-		return -1;
+		return (-1);
 	}
 
 	is_terminal = isatty(STDIN_FILENO);
@@ -32,7 +32,7 @@ ssize_t custom_getline(char **lineptr, size_t *n)
 
 			if (bytes_read <= 0)
 			{
-				return bytes_read;
+				return (bytes_read);
 			}
 			buffer_position = 0;
 			buffer_size = (size_t)bytes_read;
@@ -57,7 +57,7 @@ ssize_t custom_getline(char **lineptr, size_t *n)
 				line[line_length] = '\0';
 				*lineptr = line;
 				*n = line_length;
-				return line_length;
+				return (line_length);
 			}
 			if (c == EOF)
 			{

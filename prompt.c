@@ -14,6 +14,7 @@ ssize_t get_user_input(char **lineptr, size_t *n)
 	if (is_terminal)
 	{
 		char *prompt = "$ ";
+
 		if (write(1, prompt, _strlen(prompt)) == -1)
 		{
 			perror("write error");
@@ -25,7 +26,7 @@ ssize_t get_user_input(char **lineptr, size_t *n)
 
 	if (!is_terminal && read == -1)
 	{
-		return -1;
+		return (-1);
 	}
 
 	if (is_terminal && read == -1)
