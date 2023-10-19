@@ -3,7 +3,7 @@
  * execute_command - execute a command with arguments
  * @tokens: array of tokens representing the command and its arguments
  */
-
+void execute_command(char **tokens);
 void execute_command(char **tokens)
 {
 	pid_t child_pid;
