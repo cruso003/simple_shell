@@ -16,7 +16,7 @@ int handle_builtin_commands(char **tokens)
 	{
 		return (1);
 	}
-	else if (_strcmp(tokens[0], "exit") == 0)
+	else if (strcmp(tokens[0], "exit") == 0)
 	{
 		if (tokens[1] != NULL)
 		{
@@ -37,11 +37,11 @@ int handle_builtin_commands(char **tokens)
 		}
 		return (1);
 	}
-	else if (_strcmp(tokens[0], "echo") == 0)
+	else if (strcmp(tokens[0], "echo") == 0)
 	{
 		for (i = 1; tokens[i] != NULL; i++)
 		{
-			write(1, tokens[i], _strlen(tokens[i]));
+			write(1, tokens[i], strlen(tokens[i]));
 			if (tokens[i + 1] != NULL)
 			{
 				write(1, " ", 1);
@@ -50,7 +50,7 @@ int handle_builtin_commands(char **tokens)
 		write(1, "\n", 1);
 		return (1);
 	}
-	else if (_strcmp(tokens[0], "setenv") == 0)
+	else if (strcmp(tokens[0], "setenv") == 0)
 	{
 		if (tokens[1] == NULL || tokens[2] == NULL)
 		{
@@ -67,7 +67,7 @@ int handle_builtin_commands(char **tokens)
 		}
 		return (1);
 	}
-	else if (_strcmp(tokens[0], "unsetenv") == 0)
+	else if (strcmp(tokens[0], "unsetenv") == 0)
 	{
 		if (tokens[1] == NULL)
 		{
@@ -84,12 +84,12 @@ int handle_builtin_commands(char **tokens)
 		}
 		return (1);
 	}
-	else if (_strcmp(tokens[0], "alias") == 0)
+	else if (strcmp(tokens[0], "alias") == 0)
 	{
 		handle_alias(tokens);
 		return (1);
 	}
-	else if (_strcmp(tokens[0], "env") == 0)
+	else if (strcmp(tokens[0], "env") == 0)
 	{
 		return (handle_env_command());
 	}
@@ -105,15 +105,15 @@ int handle_builtin_commands(char **tokens)
 int handle_cd_command(char **tokens);
 int handle_cd_command(char **tokens)
 {
-	if (_strcmp(tokens[0], "cd") == 0)
+	if (strcmp(tokens[0], "cd") == 0)
 	{
 		char *oldpwd = getcwd(NULL, 0);
 		char *newdir = tokens[1] == NULL ||
-			_strcmp(tokens[1], "~") == 0
-			? getenv("HOME")
-			: tokens[1];
+							   strcmp(tokens[1], "~") == 0
+						   ? getenv("HOME")
+						   : tokens[1];
 
-		if (_strcmp(newdir, "-") == 0)
+		if (strcmp(newdir, "-") == 0)
 		{
 			newdir = getenv("OLDPWD");
 			if (newdir == NULL)
@@ -126,16 +126,16 @@ int handle_cd_command(char **tokens)
 
 		if (newdir[0] != '/')
 		{
-			char *abs_path = (char *)malloc(_strlen(oldpwd) +
-					_strlen(newdir) + 2);
+			char *abs_path = (char *)malloc(strlen(oldpwd) +
+											strlen(newdir) + 2);
 			if (abs_path == NULL)
 			{
 				perror("No path specified");
 				free(oldpwd);
 				return (1);
 			}
-			snprintf(abs_path, _strlen(oldpwd) + _strlen(newdir) + 2,
-					"%s/%s", oldpwd, newdir);
+			snprintf(abs_path, strlen(oldpwd) + strlen(newdir) + 2,
+					 "%s/%s", oldpwd, newdir);
 
 			if (chdir(abs_path) != 0)
 			{
@@ -144,7 +144,7 @@ int handle_cd_command(char **tokens)
 				free(oldpwd);
 				return (1);
 			}
-			if (_strcmp(abs_path, getenv("OLDPWD")) != 0)
+			if (strcmp(abs_path, getenv("OLDPWD")) != 0)
 			{
 				setenv("OLDPWD", oldpwd, 1);
 			}
@@ -159,7 +159,7 @@ int handle_cd_command(char **tokens)
 				free(oldpwd);
 				return (1);
 			}
-			if (_strcmp(newdir, getenv("OLDPWD")) != 0)
+			if (strcmp(newdir, getenv("OLDPWD")) != 0)
 			{
 				setenv("OLDPWD", oldpwd, 1);
 			}
@@ -182,10 +182,9 @@ int handle_env_command(void)
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		write(1, environ[i], _strlen(environ[i]));
+		write(1, environ[i], strlen(environ[i]));
 		write(1, "\n", 1);
 	}
 
 	return (1);
 }
-

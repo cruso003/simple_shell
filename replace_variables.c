@@ -10,7 +10,7 @@ char *replace_variables(const char *input)
 {
 	char *replaced = NULL;
 	char *start = (char *)input, *output = NULL,
-	     *env_variable = NULL, *new_output, *env_value;
+		 *env_variable = NULL, *new_output, *env_value;
 	char temp;
 	size_t value_len, output_len, new_len, len;
 	int last_exit_status = 0;
@@ -55,8 +55,8 @@ char *replace_variables(const char *input)
 
 			if (env_value)
 			{
-				value_len = _strlen(env_value);
-				output_len = output ? _strlen(output) : 0;
+				value_len = strlen(env_value);
+				output_len = output ? strlen(output) : 0;
 				new_len = output_len + value_len;
 
 				new_output = (char *)malloc(new_len + 1);
@@ -89,7 +89,7 @@ char *replace_variables(const char *input)
 
 		if (!replaced)
 		{
-			len = output ? _strlen(output) : 0;
+			len = output ? strlen(output) : 0;
 			new_output = (char *)malloc(len + 2);
 			if (!new_output)
 			{
@@ -114,6 +114,5 @@ char *replace_variables(const char *input)
 		start++;
 	}
 
-	return (replaced ? replaced : (output ? output : _strdup(input)));
+	return (replaced ? replaced : (output ? output : strdup(input)));
 }
-
