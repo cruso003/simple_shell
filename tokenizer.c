@@ -59,7 +59,7 @@ void tokenize_string(char *input)
 {
 	char *token;
 	char *delim = " \t\n;";
-	char *input_cpy = _strdup(input);
+	char *input_cpy = strdup(input);
 	char **tokens = malloc(sizeof(char *) * MAX_TOKENS);
 	int token_count = 0;
 	int i;
@@ -71,17 +71,17 @@ void tokenize_string(char *input)
 		free(tokens);
 		exit(EXIT_FAILURE);
 	}
-	token = custom_strtok(input_cpy, delim);
+	token = strtok(input_cpy, delim);
 	while (token != NULL)
 	{
-		tokens[token_count] = _strdup(token);
+		tokens[token_count] = strdup(token);
 		if (!tokens[token_count])
 		{
 			perror("memory allocation failed");
 			exit(EXIT_FAILURE);
 		}
 		token_count++;
-		token = custom_strtok(NULL, delim);
+		token = strtok(NULL, delim);
 	}
 	tokens[token_count] = NULL;
 
@@ -111,7 +111,7 @@ char *find_full_path(const char *command_name)
 	char full_path[1024];
 	char *directory;
 	const char *search_directories = getenv("PATH");
-	char *path_copy = _strdup(search_directories);
+	char *path_copy = strdup(search_directories);
 	char *path_copy_copy;
 
 	if (!path_copy)
@@ -120,9 +120,9 @@ char *find_full_path(const char *command_name)
 		return (NULL);
 	}
 
-	path_copy_copy = _strdup(path_copy);
+	path_copy_copy = strdup(path_copy);
 
-	directory = custom_strtok(path_copy_copy, ":");
+	directory = strtok(path_copy_copy, ":");
 	while (directory != NULL)
 	{
 		snprintf(full_path, sizeof(full_path), "%s/%s", directory, command_name);
@@ -130,10 +130,10 @@ char *find_full_path(const char *command_name)
 		{
 			free(path_copy);
 			free(path_copy_copy);
-			return (_strdup(full_path));
+			return (strdup(full_path));
 		}
 
-		directory = custom_strtok(NULL, ":");
+		directory = strtok(NULL, ":");
 	}
 
 	free(path_copy);
