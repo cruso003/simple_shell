@@ -30,6 +30,29 @@ typedef struct Alias
 	struct Alias *next;
 } Alias;
 
+/**
+ * struct info- struct for the program's data
+ * @program_name: the name of the executable
+ * @input_line: pointer to the input read for _getline
+ * @command_name: pointer to the first command typed by the user
+ * @exec_counter: number of excecuted comands
+ * @file_descriptor: file descriptor to the input of commands
+ * @tokens: pointer to array of tokenized input
+ * @env: copy of the environ
+ * @alias_list: array of pointers with aliases.
+ */
+typedef struct info
+{
+	char *program_name;
+	char *input_line;
+	char *command_name;
+	int exec_counter;
+	int file_descriptor;
+	char **tokens;
+	char **env;
+	char **alias_list;
+} program_info;
+
 /** Global variable*/
 extern char **environ;
 
@@ -46,7 +69,7 @@ char *replace_variables(const char *input);
 int handle_builtin_commands(char **tokens);
 
 /** Custom getline function*/
-ssize_t custom_getline(char **lineptr, size_t *n);
+int custom_getline(program_info *data);
 
 /** Custom realloc function for memory allocation*/
 void *custom_realloc(void *ptr, size_t size);
@@ -95,5 +118,8 @@ int _strcmp(const char *s1, char *s2);
 
 /** Custom strdup function*/
 char *_strdup(const char *str);
+
+/** Logical operator checker*/
+int logical_operator(char *arr_commands[], int l, char arr_operators[]);
 
 #endif

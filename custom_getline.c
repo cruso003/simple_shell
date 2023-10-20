@@ -1,93 +1,84 @@
 #include "shell.h"
 
-static char input_buffer[BUFFER_SIZE];
-static size_t buffer_position;
-static size_t buffer_size;
+/**
+ * custom_getline - read one line from the prompt.
+ * @data: struct for the program's data
+ *
+ * Return: reading counting bytes.
+ */
+int custom_getline(program_info *data)
+{
+	char buff[BUFFER_SIZE] = {'\0'};
+	static char arr_operators[10] = {'\0'};
+	static char *arr_commands[10] = {NULL};
+	ssize_t bytes_read, i = 0;
+
+	if (!arr_commands[0] || (arr_operators[0] == '&' && errno != 0) ||
+		(arr_operators[0] == '|' && errno == 0))
+	{
+		for (i = 0; arr_commands[i]; i++)
+		{
+			free(arr_commands[i]);
+			arr_commands[i] = NULL;
+		}
+		bytes_read = read(data->file_descriptor, &buff, BUFFER_SIZE - 1);
+		if (bytes_read == 0)
+			return (-1);
+
+		i = 0;
+		do
+		{
+			arr_commands[i] = _strdup(custom_strtok(i ? NULL : buff, "\n;"));
+			i = logical_operator(arr_commands, i, arr_operators);
+		} while (arr_commands[i++]);
+	}
+	data->input_line = arr_commands[0];
+	for (i = 0; arr_commands[i]; i++)
+	{
+		arr_commands[i] = arr_commands[i + 1];
+		arr_operators[i] = arr_operators[i + 1];
+	}
+
+	return (_strlen(data->input_line));
+}
 
 /**
- * custom_getline - Custom getline function with operator support
- * @lineptr: pointer to the line
- * @n: number of characters to get from the line
- * Return: bytes read from the line
+ * check_logic_ops - checks and split for && and || operators
+ * @arr_commands: array of the commands.
+ * @l: index in the array_commands to be checked
+ * @array_operators: array of the logical operators for each previous command
+ *
+ * Return: index of the last command in the array_commands.
  */
-ssize_t custom_getline(char **lineptr, size_t *n);
-ssize_t custom_getline(char **lineptr, size_t *n)
+int logical_operator(char *arr_commands[], int l, char arr_operators[])
 {
-	size_t line_length = 0;
-	char *line = NULL;
-	int c, is_terminal;
+	char *temp = NULL;
+	int c;
 
-	if (lineptr == NULL || n == NULL)
+	for (c = 0; arr_commands[l] != NULL && arr_commands[l][c]; c++)
 	{
-		return (-1);
-	}
-
-	is_terminal = isatty(STDIN_FILENO);
-
-	if (is_terminal)
-	{
-		if (buffer_position >= buffer_size)
+		if (arr_commands[l][c] == '&' && arr_commands[l][c + 1] == '&')
 		{
-			ssize_t bytes_read = read(STDIN_FILENO, input_buffer, BUFFER_SIZE);
-
-			if (bytes_read <= 0)
-			{
-				return (bytes_read);
-			}
-			buffer_position = 0;
-			buffer_size = (size_t)bytes_read;
+			temp = arr_commands[l];
+			arr_commands[l][c] = '\0';
+			arr_commands[l] = _strdup(arr_commands[l]);
+			arr_commands[l + 1] = _strdup(temp + c + 2);
+			l++;
+			arr_operators[l] = '&';
+			free(temp);
+			c = 0;
 		}
-	}
-
-	while (1)
-	{
-		if (is_terminal)
+		if (arr_commands[l][c] == '|' && arr_commands[l][c + 1] == '|')
 		{
-			c = input_buffer[buffer_position++];
-		}
-		else
-		{
-			c = getchar();
-		}
-
-		if (c == '\n' || c == EOF)
-		{
-			if (line_length > 0)
-			{
-				line[line_length] = '\0';
-				*lineptr = line;
-				*n = line_length;
-				return (line_length);
-			}
-			if (c == EOF)
-			{
-				return (-1);
-			}
-		}
-		else
-		{
-			if (line_length == 0)
-			{
-				line = (char *)malloc(2 * sizeof(char));
-				if (line == NULL)
-				{
-					return (-1);
-				}
-			}
-			else
-			{
-				char *temp = (char *)realloc(line, (line_length + 2) * sizeof(char));
-
-				if (temp == NULL)
-				{
-					free(line);
-					return (-1);
-				}
-				line = temp;
-			}
-			line[line_length++] = (char)c;
+			temp = arr_commands[l];
+			arr_commands[l][c] = '\0';
+			arr_commands[l] = _strdup(arr_commands[l]);
+			arr_commands[l + 1] = _strdup(temp + c + 2);
+			l++;
+			arr_operators[l] = '|';
+			free(temp);
+			c = 0;
 		}
 	}
-
-	return (-1);
+	return (l);
 }

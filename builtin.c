@@ -18,23 +18,24 @@ int handle_builtin_commands(char **tokens)
 	}
 	else if (strcmp(tokens[0], "exit") == 0)
 	{
-		if (tokens[1] == NULL)
+		if (tokens[1] != NULL)
 		{
-			fprintf(stderr, "Usage: exit status, where status is an integer\n");
-			return (1);
-		}
+			status = strtol(tokens[1], &endptr, 10);
 
-		char *endptr;
-		long status = strtol(tokens[1], &endptr, 10);
-
-		if (*endptr != '\0')
-		{
-			fprintf(stderr, "Usage: exit status, where status is an integer\n");
+			if (*endptr != '\0')
+			{
+				fprintf(stderr, "Usage: exit\n");
+			}
+			else
+			{
+				exit((int)status);
+			}
 		}
 		else
 		{
-			exit((int)status);
+			exit(EXIT_FAILURE);
 		}
+		return (1);
 	}
 	else if (strcmp(tokens[0], "echo") == 0)
 	{
@@ -108,9 +109,9 @@ int handle_cd_command(char **tokens)
 	{
 		char *oldpwd = getcwd(NULL, 0);
 		char *newdir = tokens[1] == NULL ||
-			strcmp(tokens[1], "~") == 0
-			? getenv("HOME")
-			: tokens[1];
+							   strcmp(tokens[1], "~") == 0
+						   ? getenv("HOME")
+						   : tokens[1];
 
 		if (strcmp(newdir, "-") == 0)
 		{
@@ -126,7 +127,7 @@ int handle_cd_command(char **tokens)
 		if (newdir[0] != '/')
 		{
 			char *abs_path = (char *)malloc(strlen(oldpwd) +
-					strlen(newdir) + 2);
+											strlen(newdir) + 2);
 			if (abs_path == NULL)
 			{
 				perror("No path specified");
@@ -134,7 +135,7 @@ int handle_cd_command(char **tokens)
 				return (1);
 			}
 			snprintf(abs_path, strlen(oldpwd) + strlen(newdir) + 2,
-					"%s/%s", oldpwd, newdir);
+					 "%s/%s", oldpwd, newdir);
 
 			if (chdir(abs_path) != 0)
 			{
