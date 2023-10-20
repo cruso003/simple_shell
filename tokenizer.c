@@ -97,10 +97,7 @@ void tokenize_string(char *input)
 
 	if (token_count > 0)
 	{
-		if (!handle_builtin_commands(tokens))
-		{
-			execute_command(tokens);
-		}
+		execute_command(tokens);
 	}
 
 	for (i = 0; i < token_count; i++)
