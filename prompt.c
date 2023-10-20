@@ -18,7 +18,7 @@ ssize_t get_user_input(char **lineptr, size_t *n)
 		write(1, prompt, strlen(prompt));
 	}
 
-	read = custom_getline(lineptr, n);
+	read = getline(lineptr, n, stdin);
 
 	if (!is_terminal && read == -1)
 	{
