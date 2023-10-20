@@ -69,7 +69,7 @@ char *replace_variables(const char *input);
 int handle_builtin_commands(char **tokens);
 
 /** Custom getline function*/
-int custom_getline(program_info *data);
+ssize_t custom_getline(char **lineptr, size_t *n);
 
 /** Custom realloc function for memory allocation*/
 void *custom_realloc(void *ptr, size_t size);

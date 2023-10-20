@@ -1,84 +1,97 @@
 #include "shell.h"
-
 /**
- * custom_getline - read one line from the prompt.
- * @data: struct for the program's data
- *
- * Return: reading counting bytes.
+ * custom_getline - Custom getline function with operator support
+ * @lineptr: pointer to the line
+ * @n: number of characters to get from the line
+ * Return: bytes read from the line
  */
-int custom_getline(program_info *data)
+ssize_t custom_getline(char **lineptr, size_t *n);
+ssize_t custom_getline(char **lineptr, size_t *n)
 {
-	char buff[BUFFER_SIZE] = {'\0'};
-	static char arr_operators[10] = {'\0'};
-	static char *arr_commands[10] = {NULL};
-	ssize_t bytes_read, i = 0;
-
-	if (!arr_commands[0] || (arr_operators[0] == '&' && errno != 0) ||
-		(arr_operators[0] == '|' && errno == 0))
+	if (lineptr == NULL || n == NULL)
 	{
-		for (i = 0; arr_commands[i]; i++)
+		return (-1);
+	}
+
+	/* Initialize buffer and line length*/
+	char *buffer = NULL;
+	size_t buffer_size = 0;
+	size_t line_length = 0;
+
+	while (1)
+	{
+		/*Ensure buffer has enough space*/
+		if (line_length + 1 >= buffer_size)
 		{
-			free(arr_commands[i]);
-			arr_commands[i] = NULL;
+			buffer_size += 128;
+			char *temp = (char *)realloc(buffer, buffer_size);
+
+			if (temp == NULL)
+			{
+				free(buffer);
+				*lineptr = NULL;
+				return (-1);
+			}
+			buffer = temp;
 		}
-		bytes_read = read(data->file_descriptor, &buff, BUFFER_SIZE - 1);
-		if (bytes_read == 0)
+
+		/*Read a character from stdin*/
+		int result = read(STDIN_FILENO, buffer + line_length, 1);
+
+		if (result < 0)
+		{
+			free(buffer);
+			*lineptr = NULL;
 			return (-1);
-
-		i = 0;
-		do
-		{
-			arr_commands[i] = _strdup(custom_strtok(i ? NULL : buff, "\n;"));
-			i = logical_operator(arr_commands, i, arr_operators);
-		} while (arr_commands[i++]);
-	}
-	data->input_line = arr_commands[0];
-	for (i = 0; arr_commands[i]; i++)
-	{
-		arr_commands[i] = arr_commands[i + 1];
-		arr_operators[i] = arr_operators[i + 1];
-	}
-
-	return (_strlen(data->input_line));
-}
-
-/**
- * check_logic_ops - checks and split for && and || operators
- * @arr_commands: array of the commands.
- * @l: index in the array_commands to be checked
- * @array_operators: array of the logical operators for each previous command
- *
- * Return: index of the last command in the array_commands.
- */
-int logical_operator(char *arr_commands[], int l, char arr_operators[])
-{
-	char *temp = NULL;
-	int c;
-
-	for (c = 0; arr_commands[l] != NULL && arr_commands[l][c]; c++)
-	{
-		if (arr_commands[l][c] == '&' && arr_commands[l][c + 1] == '&')
-		{
-			temp = arr_commands[l];
-			arr_commands[l][c] = '\0';
-			arr_commands[l] = _strdup(arr_commands[l]);
-			arr_commands[l + 1] = _strdup(temp + c + 2);
-			l++;
-			arr_operators[l] = '&';
-			free(temp);
-			c = 0;
 		}
-		if (arr_commands[l][c] == '|' && arr_commands[l][c + 1] == '|')
+		else if (result == 0)
 		{
-			temp = arr_commands[l];
-			arr_commands[l][c] = '\0';
-			arr_commands[l] = _strdup(arr_commands[l]);
-			arr_commands[l + 1] = _strdup(temp + c + 2);
-			l++;
-			arr_operators[l] = '|';
-			free(temp);
-			c = 0;
+			/* EOF reached*/
+			if (line_length == 0)
+			{
+				free(buffer);
+				*lineptr = NULL;
+				return (-1);
+			}
+			break;
+		}
+		else if (buffer[line_length] == '\n')
+		{
+			/* Newline encountered, terminate the string and return*/
+			buffer[line_length] = '\0';
+			break;
+		}
+
+		line_length++;
+	}
+
+	/* Allocate memory for the result line and copy data*/
+	if (*lineptr == NULL)
+	{
+		*lineptr = (char *)malloc(line_length + 1);
+		if (*lineptr == NULL)
+		{
+			free(buffer);
+			return (-1);
 		}
 	}
-	return (l);
+	else if (*n < line_length + 1)
+	{
+		/**If provided buffer is too small, reallocate it*/
+		char *temp = (char *)realloc(*lineptr, line_length + 1);
+
+		if (temp == NULL)
+		{
+			free(buffer);
+			*lineptr = NULL;
+			return (-1);
+		}
+		*lineptr = temp;
+	}
+
+	/**Copy the data to the lineptr and free the temporary buffer*/
+	strcpy(*lineptr, buffer);
+	free(buffer);
+
+	return (line_length);
 }

@@ -16,9 +16,9 @@ ssize_t get_user_input(char **lineptr, size_t *n)
 		char *prompt = "$ ";
 
 		write(1, prompt, strlen(prompt));
-		}
+	}
 
-	read = getline(lineptr, n, stdin);
+	read = custom_getline(lineptr, n);
 
 	if (!is_terminal && read == -1)
 	{
