@@ -81,7 +81,7 @@ void tokenize_string(char *input)
 		perror("memory allocation failed");
 		exit(EXIT_FAILURE);
 	}
-	token = custom_strtok(trimmed_input, delim);
+	token = strtok(trimmed_input, delim);
 	while (token != NULL)
 	{
 		tokens[token_count] = strdup(token);
@@ -91,7 +91,7 @@ void tokenize_string(char *input)
 			exit(EXIT_FAILURE);
 		}
 		token_count++;
-		token = custom_strtok(NULL, delim);
+		token = strtok(NULL, delim);
 	}
 	tokens[token_count] = NULL;
 
