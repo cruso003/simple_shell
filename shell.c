@@ -46,10 +46,10 @@ int main(int argc, char **argv)
 		{
 			continue;
 		}
-		replaced_input = replace_variables(input);
-		tokenize_string(replaced_input);
+		/**replaced_input = replace_variables(input);*/
+		tokenize_string(input);
 
-		free(replaced_input);
+		/**free(replaced_input);*/
 	}
 
 	/*/if (filename)
