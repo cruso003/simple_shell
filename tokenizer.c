@@ -123,6 +123,11 @@ char *find_full_path(const char *command_name)
 	char *path_copy = strdup(search_directories);
 	char *path_copy_copy;
 
+	if (search_directories == NULL || search_directories[0] == '\0')
+	{
+		fprintf(stderr, "./hsh: 1: %s: not found\n", command_name);
+		return (NULL);
+	}
 	if (!path_copy)
 	{
 		perror("Path not specified");
