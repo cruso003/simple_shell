@@ -128,7 +128,7 @@ char *find_full_path(const char *command_name)
 
 	path_copy_copy = strdup(path_copy);
 
-	directory = custom_strtok(path_copy_copy, ":");
+	directory = strtok(path_copy_copy, ":");
 	while (directory != NULL)
 	{
 		snprintf(full_path, sizeof(full_path), "%s/%s", directory, command_name);
@@ -139,7 +139,7 @@ char *find_full_path(const char *command_name)
 			return (strdup(full_path));
 		}
 
-		directory = custom_strtok(NULL, ":");
+		directory = strtok(NULL, ":");
 	}
 
 	free(path_copy);
