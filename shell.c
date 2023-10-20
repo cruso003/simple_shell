@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	char *input = NULL;
 	size_t len = 0;
 	/*FILE *file;*/
-	char *replaced_input;
+	/*char *replaced_input;*/
 
 	(void)argc;
 	(void)argv;
