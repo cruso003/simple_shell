@@ -130,7 +130,7 @@ char *find_full_path(const char *command_name)
 	}
 	if (!path_copy)
 	{
-		perror("Path not specified");
+		fprintf(stderr, "./hsh: 1: %s: not found\n", command_name);
 		return (NULL);
 	}
 
