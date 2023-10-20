@@ -9,16 +9,16 @@
 int main(int argc, char **argv);
 int main(int argc, char **argv)
 {
-	/*char *filename = NULL;*/
+	char *filename = NULL;
 	char *input = NULL;
 	size_t len = 0;
-	/*FILE *file;*/
+	FILE *file;
 	/*char *replaced_input;*/
 
 	(void)argc;
 	(void)argv;
 
-	/*if (argc == 2)
+	if (argc == 2)
 	{
 		filename = argv[1];
 		file = fopen(filename, "r");
@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 	{
 		fprintf(stderr, "Usage: %s [<filename>]\n", argv[0]);
 		return (EXIT_FAILURE);
-	}*/
+	}
 
 	while (1)
 	{
@@ -52,10 +52,10 @@ int main(int argc, char **argv)
 		/**free(replaced_input);*/
 	}
 
-	/*/if (filename)
+	if (filename)
 	{
 		fclose(file);
-	}*/
+	}
 	free(input);
 
 	return (EXIT_SUCCESS);
