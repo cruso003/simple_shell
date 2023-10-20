@@ -8,15 +8,17 @@
 ssize_t custom_getline(char **lineptr, size_t *n);
 ssize_t custom_getline(char **lineptr, size_t *n)
 {
-	if (lineptr == NULL || n == NULL)
-	{
-		return (-1);
-	}
-
 	/* Initialize buffer and line length*/
 	char *buffer = NULL;
 	size_t buffer_size = 0;
 	size_t line_length = 0;
+	int result;
+	char *temp;
+
+	if (lineptr == NULL || n == NULL)
+	{
+		return (-1);
+	}
 
 	while (1)
 	{
@@ -24,7 +26,7 @@ ssize_t custom_getline(char **lineptr, size_t *n)
 		if (line_length + 1 >= buffer_size)
 		{
 			buffer_size += 128;
-			char *temp = (char *)realloc(buffer, buffer_size);
+			temp = (char *)realloc(buffer, buffer_size);
 
 			if (temp == NULL)
 			{
@@ -36,7 +38,7 @@ ssize_t custom_getline(char **lineptr, size_t *n)
 		}
 
 		/*Read a character from stdin*/
-		int result = read(STDIN_FILENO, buffer + line_length, 1);
+		result = read(STDIN_FILENO, buffer + line_length, 1);
 
 		if (result < 0)
 		{
