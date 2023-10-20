@@ -15,12 +15,8 @@ ssize_t get_user_input(char **lineptr, size_t *n)
 	{
 		char *prompt = "$ ";
 
-		if (write(1, prompt, strlen(prompt)) == -1)
-		{
-			perror("write error");
-			return (-1);
+		write(1, prompt, strlen(prompt));
 		}
-	}
 
 	read = getline(lineptr, n, stdin);
 

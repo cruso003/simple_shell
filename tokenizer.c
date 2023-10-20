@@ -97,7 +97,6 @@ void tokenize_string(char *input)
 
 	if (token_count > 0)
 	{
-
 		execute_command(tokens);
 	}
 
