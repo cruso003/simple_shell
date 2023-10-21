@@ -112,7 +112,6 @@ int handle_cd_command(char **tokens)
 		{
 			if (!stdout_printed)
 			{
-				printf("%s\n", oldpwd);
 				stdout_printed = 1;
 			}
 			free(oldpwd);
@@ -145,6 +144,7 @@ int handle_cd_command(char **tokens)
 
 		if (!stdout_printed)
 		{
+			printf("%s\n", current_dir);
 			stdout_printed = 1;
 		}
 
