@@ -61,13 +61,11 @@ char *replace_variables(const char *input)
 				output_len = output ? strlen(output) : 0;
 				new_len = output_len + value_len;
 
-				new_output = (char *)malloc(new_len + 1);
-				if (!new_output)
+				if (new_output)
 				{
-					perror("malloc");
-					free(replaced);
-					return (NULL);
+					free(new_output);
 				}
+				new_output = (char *)malloc(new_len + 1);
 
 				if (output_len > 0)
 				{
@@ -92,13 +90,11 @@ char *replace_variables(const char *input)
 		if (!replaced)
 		{
 			len = output ? strlen(output) : 0;
-			new_output = (char *)malloc(len + 2);
-			if (!new_output)
+			if (new_output)
 			{
-				perror("malloc");
-				free(replaced);
-				return (NULL);
+				free(new_output);
 			}
+			new_output = (char *)malloc(len + 2);
 			if (len > 0)
 			{
 				strcpy(new_output, output);

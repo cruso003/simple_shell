@@ -14,6 +14,7 @@ int main(int argc, char **argv)
 	size_t len = 0;
 	FILE *file;
 	char *replaced_input;
+	int exit_status = EXIT_SUCCESS;
 
 	(void)argc;
 	(void)argv;
@@ -35,7 +36,7 @@ int main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	}
 
-	while (1)
+	do
 	{
 		ssize_t read = get_user_input(&input, &len, file ? file : stdin);
 
@@ -43,7 +44,7 @@ int main(int argc, char **argv)
 		{
 			break;
 		}
-		if (input[0] == '#' || (input[0] == ' ' && input[1] == '#'))
+		if (input[0] == '#' || input[0] == '\0' || (input[0] == ' ' && input[1] == '#'))
 		{
 			continue;
 		}
@@ -52,7 +53,7 @@ int main(int argc, char **argv)
 		tokenize_string(replaced_input);
 
 		free(replaced_input);
-	}
+	} while (1);
 
 	if (filename)
 	{
@@ -60,5 +61,5 @@ int main(int argc, char **argv)
 	}
 	free(input);
 
-	return (EXIT_SUCCESS);
+	return (exit_status);
 }
