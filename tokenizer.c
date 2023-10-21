@@ -44,11 +44,11 @@ void execute_command(char **tokens)
 	}
 	else
 	{
-		/*if (wait(&status) == -1)
+		if (wait(&status) == -1)
 		{
 			exit(2);
 		}
-		exit(status);*/
+		exit(status);
 		/** if (WIFEXITED(status))
 		{
 			int exit_status = WEXITSTATUS(status);
