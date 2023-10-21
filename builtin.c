@@ -19,7 +19,7 @@ int handle_builtin_commands(char **tokens)
 	{
 		if (tokens[1] != NULL)
 		{
-			long status = strtol(tokens[1], &endptr, 10);
+			int status = strtol(tokens[1], &endptr, 10);
 
 			if (*endptr != '\0')
 			{
@@ -27,7 +27,7 @@ int handle_builtin_commands(char **tokens)
 			}
 			else
 			{
-				exit(status);
+				exit(WEXITSTATUS(status));
 			}
 		}
 		return (1);
