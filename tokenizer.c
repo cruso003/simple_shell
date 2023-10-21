@@ -47,10 +47,7 @@ void execute_command(char **tokens)
 	}
 	else
 	{
-		if (waitpid(child_pid, &status, 0) == -1)
-		{
-			exit(EXIT_FAILURE);
-		}
+		waitpid(child_pid, &status, 0);
 	}
 }
 /**
