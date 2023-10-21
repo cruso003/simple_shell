@@ -30,10 +30,8 @@ int handle_builtin_commands(char **tokens)
 				exit(status);
 			}
 		}
-
 		return (1);
 	}
-
 	else if (strcmp(tokens[0], "echo") == 0)
 	{
 		for (i = 1; tokens[i] != NULL; i++)
