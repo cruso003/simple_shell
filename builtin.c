@@ -17,19 +17,22 @@ int handle_builtin_commands(char **tokens)
 	}
 	else if (strcmp(tokens[0], "exit") == 0)
 	{
-		if (tokens[1] == NULL)
+		if (tokens[1] != NULL)
 		{
-			long status = strtol(tokens[1], &endptr, 10);
+			int status = strtol(tokens[1], &endptr, 10);
 
-			if (*endptr != '\0' || status < INT_MIN || status > INT_MAX)
+			if (*endptr != '\0')
 			{
-				fprintf(stderr, "./hsh: 1: exit: Illegal number: %s\n", tokens[1]);
-				exit(2);
+				fprintf(stderr, "Usage: exit status\n");
 			}
 			else
 			{
-				exit((int)status);
+				exit(status);
 			}
+		}
+		else
+		{
+			exit(0);
 		}
 		return (1);
 	}
