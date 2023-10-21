@@ -33,7 +33,7 @@ int handle_builtin_commands(char **tokens)
 		}
 		else
 		{
-			exit(EXIT_FAILURE);
+			exit(0);
 		}
 		fprintf(stderr, "Usage: exit\n");
 		return (1);

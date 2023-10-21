@@ -34,7 +34,7 @@ void execute_command(char **tokens)
 
 			if (exec_path == NULL)
 			{
-				fprintf(stderr, "./hsh: 1: %s: not found\n", command_name);
+
 				exit(EXIT_FAILURE);
 			}
 
