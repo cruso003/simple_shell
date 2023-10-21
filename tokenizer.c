@@ -24,7 +24,7 @@ void execute_command(char **tokens)
 		{
 			if (execve(command_name, tokens, envp) == -1)
 			{
-				_exit(2);
+				exit(1);
 			}
 		}
 		else
@@ -33,12 +33,12 @@ void execute_command(char **tokens)
 
 			if (exec_path == NULL)
 			{
-				_exit(2);
+				exit(1);
 			}
 
 			if (execve(exec_path, tokens, envp) == -1)
 			{
-				_exit(2);
+				exit(1);
 			}
 		}
 	}
@@ -49,16 +49,6 @@ void execute_command(char **tokens)
 			exit(2);
 		}
 		exit(status);
-		/** if (WIFEXITED(status))
-		{
-			int exit_status = WEXITSTATUS(status);
-
-			exit(exit_status);
-			if (exit_status == 2)
-			{
-				exit(exit_status);
-			}
-		} */
 	}
 }
 
