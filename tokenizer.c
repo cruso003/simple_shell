@@ -57,7 +57,7 @@ void execute_command(char **tokens)
 			int exit_status = WEXITSTATUS(status);
 			if (exit_status == 2)
 			{
-				exit(exit_status);
+				/*exit(exit_status);*/
 			}
 		}
 	}
