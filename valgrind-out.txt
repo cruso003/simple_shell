@@ -1,0 +1,233 @@
+==577143== Memcheck, a memory error detector
+==577143== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==577143== Using Valgrind-3.18.1-42b08ed5bd-20211015 and LibVEX; rerun with -h for copyright info
+==577143== Command: ./hsh
+==577143== Parent PID: 1664
+==577143== 
+--577143-- 
+--577143-- Valgrind options:
+--577143--    --leak-check=full
+--577143--    --show-leak-kinds=all
+--577143--    --track-origins=yes
+--577143--    --verbose
+--577143--    --log-file=valgrind-out.txt
+--577143-- Contents of /proc/version:
+--577143--   Linux version 5.15.90.1-microsoft-standard-WSL2 (oe-user@oe-host) (x86_64-msft-linux-gcc (GCC) 9.3.0, GNU ld (GNU Binutils) 2.34.0.20200220) #1 SMP Fri Jan 27 02:56:13 UTC 2023
+--577143-- 
+--577143-- Arch and hwcaps: AMD64, LittleEndian, amd64-cx16-lzcnt-rdtscp-sse3-ssse3-avx-avx2-bmi-f16c-rdrand-rdseed
+--577143-- Page sizes: currently 4096, max supported 4096
+--577143-- Valgrind library directory: /usr/libexec/valgrind
+--577143-- Reading syms from /home/truthserum/Alx/simple_shell/hsh
+--577143-- Reading syms from /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+--577143--   Considering /usr/lib/debug/.build-id/97/18d3757f00d2366056830aae09698dbd35e32c.debug ..
+--577143--   .. build-id is valid
+--577143-- Reading syms from /usr/libexec/valgrind/memcheck-amd64-linux
+--577143--    object doesn't have a symbol table
+--577143--    object doesn't have a dynamic symbol table
+--577143-- Scheduler: using generic scheduler lock implementation.
+--577143-- Reading suppressions file: /usr/libexec/valgrind/default.supp
+==577143== embedded gdbserver: reading from /tmp/vgdb-pipe-from-vgdb-to-577143-by-truthserum-on-???
+==577143== embedded gdbserver: writing to   /tmp/vgdb-pipe-to-vgdb-from-577143-by-truthserum-on-???
+==577143== embedded gdbserver: shared mem   /tmp/vgdb-pipe-shared-mem-vgdb-577143-by-truthserum-on-???
+==577143== 
+==577143== TO CONTROL THIS PROCESS USING vgdb (which you probably
+==577143== don't want to do, unless you know exactly what you're doing,
+==577143== or are doing some strange experiment):
+==577143==   /usr/bin/vgdb --pid=577143 ...command...
+==577143== 
+==577143== TO DEBUG THIS PROCESS USING GDB: start GDB like this
+==577143==   /path/to/gdb ./hsh
+==577143== and then give GDB the following command
+==577143==   target remote | /usr/bin/vgdb --pid=577143
+==577143== --pid is optional if only one valgrind process is running
+==577143== 
+--577143-- REDIR: 0x402aa40 (ld-linux-x86-64.so.2:strlen) redirected to 0x580bcec2 (???)
+--577143-- REDIR: 0x402a810 (ld-linux-x86-64.so.2:index) redirected to 0x580bcedc (???)
+--577143-- Reading syms from /usr/libexec/valgrind/vgpreload_core-amd64-linux.so
+--577143--    object doesn't have a symbol table
+--577143-- Reading syms from /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so
+--577143--    object doesn't have a symbol table
+==577143== WARNING: new redirection conflicts with existing -- ignoring it
+--577143--     old: 0x0402aa40 (strlen              ) R-> (0000.0) 0x580bcec2 ???
+--577143--     new: 0x0402aa40 (strlen              ) R-> (2007.0) 0x0484ee30 strlen
+--577143-- REDIR: 0x4027220 (ld-linux-x86-64.so.2:strcmp) redirected to 0x484fcd0 (strcmp)
+--577143-- REDIR: 0x402afa0 (ld-linux-x86-64.so.2:mempcpy) redirected to 0x4853840 (mempcpy)
+--577143-- Reading syms from /usr/lib/x86_64-linux-gnu/libc.so.6
+--577143--   Considering /usr/lib/debug/.build-id/a4/3bfc8428df6623cd498c9c0caeb91aec9be4f9.debug ..
+--577143--   .. build-id is valid
+==577143== WARNING: new redirection conflicts with existing -- ignoring it
+--577143--     old: 0x04905c60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--577143--     new: 0x04905c60 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
+==577143== WARNING: new redirection conflicts with existing -- ignoring it
+--577143--     old: 0x04905c60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--577143--     new: 0x04905c60 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
+==577143== WARNING: new redirection conflicts with existing -- ignoring it
+--577143--     old: 0x04905c60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--577143--     new: 0x04905c60 (memalign            ) R-> (1017.0) 0x0484e050 aligned_alloc
+==577143== WARNING: new redirection conflicts with existing -- ignoring it
+--577143--     old: 0x04905c60 (memalign            ) R-> (1011.0) 0x0484e080 memalign
+--577143--     new: 0x04905c60 (memalign            ) R-> (1017.0) 0x0484e020 aligned_alloc
+--577143-- REDIR: 0x4908720 (libc.so.6:strnlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x49089e0 (libc.so.6:strpbrk) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x49082e0 (libc.so.6:strcmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4926cd0 (libc.so.6:wcsnlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x49096d0 (libc.so.6:memset) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4925540 (libc.so.6:wcslen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4909c10 (libc.so.6:memcpy@@GLIBC_2.14) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4925370 (libc.so.6:wcschr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4908260 (libc.so.6:index) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4908960 (libc.so.6:rindex) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x49095a0 (libc.so.6:memmove) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+==577143== Preferring higher priority redirection:
+--577143--     old: 0x04a009c0 (__memcpy_avx_unalign) R-> (2018.0) 0x04850f90 __memcpy_avx_unaligned_erms
+--577143--     new: 0x04a009c0 (__memcpy_avx_unalign) R-> (2018.1) 0x04852880 memmove
+--577143-- REDIR: 0x49253f0 (libc.so.6:wcscmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x49099e0 (libc.so.6:stpncpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x49259b0 (libc.so.6:wmemchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4908830 (libc.so.6:strncmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4909a70 (libc.so.6:strcasecmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4908420 (libc.so.6:strcspn) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4925470 (libc.so.6:wcscpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x49081d0 (libc.so.6:strcat) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4909b60 (libc.so.6:strncasecmp_l) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4909480 (libc.so.6:bcmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4911570 (libc.so.6:memrchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x490b010 (libc.so.6:strchrnul) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4908390 (libc.so.6:strcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4909b10 (libc.so.6:strcasecmp_l) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x49086a0 (libc.so.6:strlen) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x49088d0 (libc.so.6:strncpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4909950 (libc.so.6:stpcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x49093f0 (libc.so.6:memchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4908b00 (libc.so.6:strspn) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x49097d0 (libc.so.6:mempcpy) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x4909ac0 (libc.so.6:strncasecmp) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x490af80 (libc.so.6:rawmemchr) redirected to 0x483f220 (_vgnU_ifunc_wrapper)
+--577143-- REDIR: 0x49fd810 (libc.so.6:__strrchr_avx2) redirected to 0x484e810 (rindex)
+==577143== Conditional jump or move depends on uninitialised value(s)
+==577143==    at 0x10A972: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577143==  Uninitialised value was created by a stack allocation
+==577143==    at 0x10A89B: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577143== 
+--577143-- REDIR: 0x49fd9e0 (libc.so.6:__strlen_avx2) redirected to 0x484ed10 (strlen)
+--577143-- REDIR: 0x49050a0 (libc.so.6:malloc) redirected to 0x4848820 (malloc)
+--577143-- REDIR: 0x49f94c0 (libc.so.6:__memchr_avx2) redirected to 0x484fd50 (memchr)
+--577143-- REDIR: 0x4a009c0 (libc.so.6:__memcpy_avx_unaligned_erms) redirected to 0x4852880 (memmove)
+--577143-- REDIR: 0x49053e0 (libc.so.6:free) redirected to 0x484b210 (free)
+--577143-- REDIR: 0x49feeb0 (libc.so.6:__strcpy_avx2) redirected to 0x484ee60 (strcpy)
+--577143-- REDIR: 0x49f89f0 (libc.so.6:__strspn_sse42) redirected to 0x4853d50 (strspn)
+--577143-- REDIR: 0x49f8790 (libc.so.6:__strcspn_sse42) redirected to 0x4853c70 (strcspn)
+--577143-- REDIR: 0x49f8b40 (libc.so.6:__strcmp_avx2) redirected to 0x484fbd0 (strcmp)
+--577295-- REDIR: 0x49fd380 (libc.so.6:__strchr_avx2) redirected to 0x484e9f0 (index)
+--577295-- REDIR: 0x49f8f80 (libc.so.6:__strncmp_avx2) redirected to 0x484f3e0 (strncmp)
+--577295-- REDIR: 0x49fd600 (libc.so.6:__strchrnul_avx2) redirected to 0x4853330 (strchrnul)
+--577295-- REDIR: 0x4a00980 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4853440 (mempcpy)
+--577143-- REDIR: 0x4905740 (libc.so.6:realloc) redirected to 0x484dc50 (realloc)
+--577143-- REDIR: 0x49f8f80 (libc.so.6:__strncmp_avx2) redirected to 0x484f3e0 (strncmp)
+--577143-- REDIR: 0x48a5150 (libc.so.6:setenv) redirected to 0x48542d0 (setenv)
+--577143-- REDIR: 0x49fd380 (libc.so.6:__strchr_avx2) redirected to 0x484e9f0 (index)
+--577143-- REDIR: 0x4a00980 (libc.so.6:__mempcpy_avx_unaligned_erms) redirected to 0x4853440 (mempcpy)
+--577143-- REDIR: 0x49fd600 (libc.so.6:__strchrnul_avx2) redirected to 0x4853330 (strchrnul)
+--577143-- REDIR: 0x49fde30 (libc.so.6:__strcat_avx2) redirected to 0x484ea20 (strcat)
+==577747== 
+==577747== HEAP SUMMARY:
+==577747==     in use at exit: 1,180 bytes in 6 blocks
+==577747==   total heap usage: 54 allocs, 48 frees, 12,347 bytes allocated
+==577747== 
+==577747== Searching for pointers to 6 not-freed blocks
+==577747== Checked 107,584 bytes
+==577747== 
+==577747== 5 bytes in 1 blocks are still reachable in loss record 1 of 5
+==577747==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==577747==    by 0x490858E: strdup (strdup.c:42)
+==577747==    by 0x10AC53: tokenize_string (in /home/truthserum/Alx/simple_shell/hsh)
+==577747==    by 0x10A9DF: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577747== 
+==577747== 12 bytes in 2 blocks are definitely lost in loss record 2 of 5
+==577747==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==577747==    by 0x10A7BA: replace_variables (in /home/truthserum/Alx/simple_shell/hsh)
+==577747==    by 0x10A9CF: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577747== 
+==577747== 19 bytes in 1 blocks are still reachable in loss record 3 of 5
+==577747==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==577747==    by 0x10A7BA: replace_variables (in /home/truthserum/Alx/simple_shell/hsh)
+==577747==    by 0x10A9CF: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577747== 
+==577747== 120 bytes in 1 blocks are still reachable in loss record 4 of 5
+==577747==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==577747==    by 0x48E0122: getdelim (iogetdelim.c:62)
+==577747==    by 0x10A4CC: get_user_input (in /home/truthserum/Alx/simple_shell/hsh)
+==577747==    by 0x10A993: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577747== 
+==577747== 1,024 bytes in 1 blocks are still reachable in loss record 5 of 5
+==577747==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==577747==    by 0x10AB7D: tokenize_string (in /home/truthserum/Alx/simple_shell/hsh)
+==577747==    by 0x10A9DF: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577747== 
+==577747== LEAK SUMMARY:
+==577747==    definitely lost: 12 bytes in 2 blocks
+==577747==    indirectly lost: 0 bytes in 0 blocks
+==577747==      possibly lost: 0 bytes in 0 blocks
+==577747==    still reachable: 1,168 bytes in 4 blocks
+==577747==         suppressed: 0 bytes in 0 blocks
+==577747== 
+==577747== ERROR SUMMARY: 7 errors from 2 contexts (suppressed: 0 from 0)
+==577747== 
+==577747== 6 errors in context 1 of 2:
+==577747== Conditional jump or move depends on uninitialised value(s)
+==577747==    at 0x10A972: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577747==  Uninitialised value was created by a stack allocation
+==577747==    at 0x10A89B: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577747== 
+==577747== ERROR SUMMARY: 7 errors from 2 contexts (suppressed: 0 from 0)
+==577143== 
+==577143== HEAP SUMMARY:
+==577143==     in use at exit: 1,174 bytes in 7 blocks
+==577143==   total heap usage: 70 allocs, 63 frees, 12,874 bytes allocated
+==577143== 
+==577143== Searching for pointers to 7 not-freed blocks
+==577143== Checked 107,568 bytes
+==577143== 
+==577143== 9 bytes in 1 blocks are still reachable in loss record 1 of 5
+==577143==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==577143==    by 0x10A7BA: replace_variables (in /home/truthserum/Alx/simple_shell/hsh)
+==577143==    by 0x10A9CF: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577143== 
+==577143== 9 bytes in 2 blocks are still reachable in loss record 2 of 5
+==577143==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==577143==    by 0x490858E: strdup (strdup.c:42)
+==577143==    by 0x10AC53: tokenize_string (in /home/truthserum/Alx/simple_shell/hsh)
+==577143==    by 0x10A9DF: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577143== 
+==577143== 12 bytes in 2 blocks are definitely lost in loss record 3 of 5
+==577143==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==577143==    by 0x10A7BA: replace_variables (in /home/truthserum/Alx/simple_shell/hsh)
+==577143==    by 0x10A9CF: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577143== 
+==577143== 120 bytes in 1 blocks are still reachable in loss record 4 of 5
+==577143==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==577143==    by 0x48E0122: getdelim (iogetdelim.c:62)
+==577143==    by 0x10A4CC: get_user_input (in /home/truthserum/Alx/simple_shell/hsh)
+==577143==    by 0x10A993: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577143== 
+==577143== 1,024 bytes in 1 blocks are still reachable in loss record 5 of 5
+==577143==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==577143==    by 0x10AB7D: tokenize_string (in /home/truthserum/Alx/simple_shell/hsh)
+==577143==    by 0x10A9DF: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577143== 
+==577143== LEAK SUMMARY:
+==577143==    definitely lost: 12 bytes in 2 blocks
+==577143==    indirectly lost: 0 bytes in 0 blocks
+==577143==      possibly lost: 0 bytes in 0 blocks
+==577143==    still reachable: 1,162 bytes in 5 blocks
+==577143==         suppressed: 0 bytes in 0 blocks
+==577143== 
+==577143== ERROR SUMMARY: 9 errors from 2 contexts (suppressed: 0 from 0)
+==577143== 
+==577143== 8 errors in context 1 of 2:
+==577143== Conditional jump or move depends on uninitialised value(s)
+==577143==    at 0x10A972: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577143==  Uninitialised value was created by a stack allocation
+==577143==    at 0x10A89B: main (in /home/truthserum/Alx/simple_shell/hsh)
+==577143== 
+==577143== ERROR SUMMARY: 9 errors from 2 contexts (suppressed: 0 from 0)

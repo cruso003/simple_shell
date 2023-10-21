@@ -45,8 +45,10 @@ char *replace_variables(const char *input)
 				}
 				if (start == env_variable)
 				{
+					free(new_output);
 					continue;
 				}
+
 				temp = *start;
 				*start = '\0';
 
