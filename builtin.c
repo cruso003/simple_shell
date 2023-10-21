@@ -112,10 +112,13 @@ int handle_cd_command(char **tokens)
 
 		if (newdir == NULL)
 		{
-			printf("%s\n", oldpwd);
-			stdout_printed = 1;
+			if (!stdout_printed)
+			{
+				printf("%s\n", oldpwd);
+				stdout_printed = 1;
+			}
 			free(oldpwd);
-			return (0);
+			return 0;
 		}
 
 		if (strcmp(newdir, "-") == 0)
@@ -176,7 +179,7 @@ int handle_cd_command(char **tokens)
 					stdout_printed = 1;
 				}
 				free(oldpwd);
-				return (0);
+				return 0;
 			}
 			if (strcmp(newdir, getenv("OLDPWD")) != 0)
 			{
