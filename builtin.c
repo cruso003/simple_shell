@@ -108,11 +108,12 @@ int handle_cd_command(char **tokens)
 						   ? getenv("HOME")
 						   : tokens[1];
 
-		if (newdir == NULL)
+		/*if (newdir == NULL)
 		{
+			printf("%s\n", oldpwd);
 			free(oldpwd);
 			return (0);
-		}
+		}*/
 
 		if (strcmp(newdir, "-") == 0)
 		{
