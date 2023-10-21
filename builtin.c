@@ -142,6 +142,7 @@ int handle_cd_command(char **tokens)
 		}
 
 		current_dir = getcwd(NULL, 0);
+
 		if (!stdout_printed)
 		{
 			printf("%s\n", current_dir);
