@@ -145,7 +145,6 @@ int handle_cd_command(char **tokens)
 
 		if (!stdout_printed)
 		{
-			printf("%s\n", current_dir);
 			stdout_printed = 1;
 		}
 
