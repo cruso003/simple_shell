@@ -24,10 +24,11 @@ int main(int argc, char **argv)
 		file = fopen(filename, "r");
 		if (file == NULL)
 		{
-			fprintf(stderr, "/hsh: 0: Can't open %s\n", filename);
-			return (EXIT_FAILURE);
+			fprintf(stderr, "%s: 0: Can't open %s\n", argv[0], filename);
+			return (127);
 		}
 	}
+
 	else if (argc > 2)
 	{
 		fprintf(stderr, "Usage: %s [<filename>]\n", argv[0]);
