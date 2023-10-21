@@ -173,11 +173,6 @@ int handle_cd_command(char **tokens)
 			}
 			if (newdir[0] == '~' && getenv("HOME") == NULL)
 			{
-				if (!stdout_printed)
-				{
-					printf("%s\n", oldpwd);
-					stdout_printed = 1;
-				}
 				free(oldpwd);
 				return 0;
 			}
