@@ -24,7 +24,7 @@ void execute_command(char **tokens)
 		{
 			if (execve(command_name, tokens, envp) == -1)
 			{
-				exit(1);
+				_exit(1);
 			}
 		}
 		else
@@ -33,12 +33,12 @@ void execute_command(char **tokens)
 
 			if (exec_path == NULL)
 			{
-				exit(1);
+				_exit(1);
 			}
 
 			if (execve(exec_path, tokens, envp) == -1)
 			{
-				exit(1);
+				_exit(1);
 			}
 		}
 	}
