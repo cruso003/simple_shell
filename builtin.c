@@ -134,7 +134,7 @@ int handle_cd_command(char **tokens)
 
 			if (chdir(abs_path) != 0)
 			{
-				perror("change directory error");
+				fprintf(stderr, "./hsh: 1: cd: can't cd to %s\n", newdir);
 				free(abs_path);
 				free(oldpwd);
 				return (1);
@@ -150,7 +150,7 @@ int handle_cd_command(char **tokens)
 		{
 			if (chdir(newdir) != 0)
 			{
-				perror("change directory error");
+				fprintf(stderr, "./hsh: 1: cd: can't cd to %s\n", newdir);
 				free(oldpwd);
 				return (1);
 			}
