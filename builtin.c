@@ -10,7 +10,7 @@ int handle_builtin_commands(char **tokens)
 {
 	int i;
 	char *endptr;
-	long status = 2;
+	long status;
 
 	if (handle_cd_command(tokens))
 	{
@@ -31,6 +31,7 @@ int handle_builtin_commands(char **tokens)
 				exit((int)status);
 			}
 		}
+		exit(0);
 		return (1);
 	}
 	else if (strcmp(tokens[0], "echo") == 0)
