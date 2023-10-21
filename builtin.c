@@ -113,7 +113,7 @@ int handle_cd_command(char **tokens)
 			newdir = getenv("OLDPWD");
 			if (newdir == NULL)
 			{
-				write(2, "cd -: OLDPWD not set\n", 21);
+				fprintf(stderr, "./hsh: 1: cd: OLDPWD not set\n");
 				free(oldpwd);
 				return (1);
 			}
