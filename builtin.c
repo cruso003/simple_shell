@@ -19,21 +19,19 @@ int handle_builtin_commands(char **tokens)
 	{
 		if (tokens[1] != NULL)
 		{
-			long status = strtol(tokens[1], &endptr, 10);
+			strtol(tokens[1], &endptr, 10);
 
-			if (*endptr != '\0' || status < 0)
+			if (*endptr != '\0')
 			{
-				fprintf(stderr, "./hsh: 1: exit: Illegal number: %s\n", tokens[1]);
-				exit(2);
+				fprintf(stderr, "Usage: exit status\n");
 			}
 			else
 			{
-				exit((int)status);
+				exit(2);
 			}
 		}
 		return (1);
 	}
-
 	else if (strcmp(tokens[0], "echo") == 0)
 	{
 		for (i = 1; tokens[i] != NULL; i++)
