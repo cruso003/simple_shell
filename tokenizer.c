@@ -46,10 +46,8 @@ void execute_command(char **tokens)
 	{
 		if (wait(&status) == -1)
 		{
-			exit(2);
+			exit(WEXITSTATUS(status));
 		}
-
-		exit(WEXITSTATUS(status));
 	}
 }
 
