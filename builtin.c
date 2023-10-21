@@ -126,12 +126,12 @@ int handle_cd_command(char **tokens)
 			newdir = getenv("OLDPWD");
 			if (newdir == NULL)
 			{
-				if (!stdout_printed)
+				/*if (!stdout_printed)
 				{
 					printf("%s\n", oldpwd);
 					stdout_printed = 1;
 				}
-				free(oldpwd);
+				free(oldpwd);*/
 				return (1);
 			}
 		}
@@ -171,16 +171,6 @@ int handle_cd_command(char **tokens)
 				free(oldpwd);
 				return (1);
 			}
-			/*if (newdir[0] == '~' && getenv("HOME") == NULL)
-			{
-				if (!stdout_printed)
-				{
-					printf("%s\n", oldpwd);
-					stdout_printed = 1;
-				}
-				free(oldpwd);
-				return 0;
-			}*/
 			if (strcmp(newdir, getenv("OLDPWD")) != 0)
 			{
 				setenv("OLDPWD", oldpwd, 1);
