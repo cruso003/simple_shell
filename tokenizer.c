@@ -35,7 +35,7 @@ void execute_command(char **tokens)
 			if (exec_path == NULL)
 			{
 
-				exit(EXIT_FAILURE);
+				exit(2);
 			}
 
 			if (execve(exec_path, tokens, envp) == -1)
