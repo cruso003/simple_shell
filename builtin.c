@@ -10,7 +10,6 @@ int handle_builtin_commands(char **tokens)
 {
 	int i;
 	char *endptr;
-	long status;
 
 	if (handle_cd_command(tokens))
 	{
@@ -20,7 +19,7 @@ int handle_builtin_commands(char **tokens)
 	{
 		if (tokens[1] != NULL)
 		{
-			status = strtol(tokens[1], &endptr, 10);
+			strtol(tokens[1], &endptr, 10);
 
 			if (*endptr != '\0')
 			{
@@ -28,7 +27,7 @@ int handle_builtin_commands(char **tokens)
 			}
 			else
 			{
-				exit((int)status);
+				exit(2);
 			}
 		}
 		return (1);
