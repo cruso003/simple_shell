@@ -55,8 +55,10 @@ void execute_command(char **tokens)
 		if (WIFEXITED(status))
 		{
 			int exit_status = WEXITSTATUS(status);
-
-			exit(exit_status);
+			if (exit_status == 2)
+			{
+				exit(exit_status);
+			}
 		}
 	}
 }
