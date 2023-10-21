@@ -10,7 +10,7 @@ int handle_builtin_commands(char **tokens)
 {
 	int i;
 	char *endptr;
-	long status;
+	long status = 0;
 
 	if (handle_cd_command(tokens))
 	{
@@ -33,7 +33,7 @@ int handle_builtin_commands(char **tokens)
 		}
 		else
 		{
-			exit(EXIT_FAILURE);
+			exit((int)status);
 		}
 		fprintf(stderr, "Usage: exit\n");
 		return (1);
