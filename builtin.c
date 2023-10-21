@@ -28,7 +28,15 @@ int handle_builtin_commands(char **tokens)
 			}
 			else
 			{
-				return (int)status;
+				if (WIFEXITED(status))
+				{
+					int exit_status = WEXITSTATUS(status);
+
+					if (exit_status == 2)
+					{
+						return (1);
+					}
+				}
 			}
 		}
 		return (1);
