@@ -114,7 +114,7 @@ int handle_cd_command(char **tokens)
 			if (newdir == NULL)
 			{
 				fprintf(stderr, "./hsh: 1: cd: OLDPWD not set\n");
-				fprintf(stderr, "./hsh: 1: cd: OLDPWD not set\n");
+				write(2, "./hsh: 2: cd: OLDPWD not set\n", 30);
 				free(oldpwd);
 				return (1);
 			}
@@ -136,6 +136,7 @@ int handle_cd_command(char **tokens)
 			if (chdir(abs_path) != 0)
 			{
 				fprintf(stderr, "./hsh: 1: cd: can't cd to %s\n", newdir);
+				write(2, "./hsh: 2: cd: can't cd to %s\n", strlen(newdir) + 20);
 				free(abs_path);
 				free(oldpwd);
 				return (1);
@@ -152,6 +153,7 @@ int handle_cd_command(char **tokens)
 			if (chdir(newdir) != 0)
 			{
 				fprintf(stderr, "./hsh: 1: cd: can't cd to %s\n", newdir);
+				write(2, "./hsh: 2: cd: can't cd to %s\n", strlen(newdir) + 20);
 				free(oldpwd);
 				return (1);
 			}
