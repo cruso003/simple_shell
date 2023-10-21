@@ -48,6 +48,14 @@ void execute_command(char **tokens)
 		{
 			exit(2);
 		}
+		if (WIFEXITED(status))
+		{
+			int exit_status = WEXITSTATUS(status);
+			if (exit_status != 0)
+			{
+				fprintf(stderr, "Command failed with status code %d\n", exit_status);
+			}
+		}
 		exit(status);
 	}
 }
