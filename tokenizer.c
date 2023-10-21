@@ -52,14 +52,14 @@ void execute_command(char **tokens)
 			exit(2);
 		}
 
-		/*if (WIFEXITED(status))
+		if (WIFEXITED(status))
 		{
 			int exit_status = WEXITSTATUS(status);
 			if (exit_status == 2)
 			{
-				fprintf(stderr, "error:.");
+				exit(2);
 			}
-		}*/
+		}
 	}
 }
 
