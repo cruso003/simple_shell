@@ -17,7 +17,7 @@ int handle_builtin_commands(char **tokens)
 	}
 	else if (strcmp(tokens[0], "exit") == 0)
 	{
-		if (tokens[1] != NULL)
+		if (tokens[1] == NULL)
 		{
 			long status = strtol(tokens[1], &endptr, 10);
 
