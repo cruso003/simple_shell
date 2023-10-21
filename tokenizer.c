@@ -1,5 +1,4 @@
 #include "shell.h"
-
 /**
  * execute_command - execute a command with arguments
  * @tokens: array of tokens representing the command and its arguments
@@ -9,6 +8,7 @@ void execute_command(char **tokens)
 {
 	pid_t child_pid;
 	int status;
+	int command_not_found = 0;
 	pid_t wait_result;
 
 	child_pid = fork();
@@ -36,6 +36,7 @@ void execute_command(char **tokens)
 
 			if (exec_path == NULL)
 			{
+
 				exit(2);
 			}
 
@@ -48,11 +49,14 @@ void execute_command(char **tokens)
 	}
 	else
 	{
-		wait_result = wait(&status); /* Move wait call to the parent process.*/
-
+		waitpid(child_pid, &status, 0);
+		if (command_not_found)
+		{
+			exit(2); /* Set exit status to indicate command not found*/
+		}
+		wait_result = (waitpid(child_pid, &status, 0));
 		if (wait_result == -1)
 		{
-			perror("wait error");
 			exit(2);
 		}
 
@@ -62,7 +66,7 @@ void execute_command(char **tokens)
 
 			if (exit_status == 2)
 			{
-				fprintf(stderr, "Child process exited with status 2 (Command not found).\n");
+				command_not_found = 1;
 			}
 		}
 	}
