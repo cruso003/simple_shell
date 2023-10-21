@@ -15,8 +15,8 @@ int main(int argc, char **argv)
 	FILE *file;
 	char *replaced_input;
 	int command_not_found = 0;
-	int status;
-	pid_t wait_result = wait(&status);
+	/*int status;
+	pid_t wait_result = wait(&status);*/
 
 	(void)argc;
 	(void)argv;
@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 			exit(2); /* Set exit status to indicate command not found*/
 		}
 
-		if (wait_result == -1)
+		/*if (wait_result == -1)
 		{
 			perror("wait error");
 			exit(2);
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 			{
 				command_not_found = 1;
 			}
-		}
+		}*/
 	}
 
 	if (filename)
