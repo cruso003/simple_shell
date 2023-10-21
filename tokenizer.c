@@ -33,7 +33,8 @@ void execute_command(char **tokens)
 
 			if (exec_path == NULL)
 			{
-				_exit(1);
+				fprintf(stderr, "Command not found: %s\n", command_name);
+				exit(EXIT_FAILURE);
 			}
 
 			if (execve(exec_path, tokens, envp) == -1)
@@ -44,10 +45,7 @@ void execute_command(char **tokens)
 	}
 	else
 	{
-		if (wait(&status) == -1)
-		{
-			exit(WEXITSTATUS(status));
-		}
+		waitpid(child_pid, &status, 0);
 	}
 }
 
