@@ -120,7 +120,6 @@ int handle_cd_command(char **tokens)
 			newdir = getenv("OLDPWD");
 			if (newdir == NULL)
 			{
-				printf("%s\n", oldpwd);
 				free(oldpwd);
 				return (1);
 			}
