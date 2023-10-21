@@ -28,7 +28,7 @@ int handle_builtin_commands(char **tokens)
 			}
 			else
 			{
-				exit((int)status);
+				return (int)status;
 			}
 		}
 		return (1);
