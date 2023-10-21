@@ -109,11 +109,16 @@ int handle_cd_command(char **tokens)
 
 		if (newdir == NULL)
 		{
-			char buffer[71];
+			int i;
 
-			oldpwd[70] = '\0';
-			snprintf(buffer, sizeof(buffer), "%s%*s", oldpwd, 70 - (int)strlen(oldpwd), "");
-			printf("%s", buffer);
+			for (i = 0; i < 70 && oldpwd[i] != '\0'; i++)
+			{
+				putchar(oldpwd[i]);
+			}
+			for (; i < 70; i++)
+			{
+				putchar(' ');
+			}
 			free(oldpwd);
 			return (1);
 		}
