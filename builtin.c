@@ -30,10 +30,7 @@ int handle_builtin_commands(char **tokens)
 				exit(status);
 			}
 		}
-		else
-		{
-			exit(0);
-		}
+
 		return (1);
 	}
 
