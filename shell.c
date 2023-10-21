@@ -43,11 +43,7 @@ int main(int argc, char **argv)
 		{
 			break;
 		}
-		if (input[0] == '#' || (input[0] == ' ' && input[1] == '#'))
-		{
-			continue;
-		}
-		if (input[0] == '\0')
+		if (input[0] == '#' || (input[0] == ' ' && input[1] == '#') || input[0] == '\0')
 		{
 			continue;
 		}
