@@ -24,7 +24,6 @@ void execute_command(char **tokens)
 		{
 			if (execve(command_name, tokens, envp) == -1)
 			{
-				perror("Command execution failed");
 				exit(2);
 			}
 		}
