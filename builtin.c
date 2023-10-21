@@ -105,20 +105,15 @@ int handle_cd_command(char **tokens)
 	if (strcmp(tokens[0], "cd") == 0)
 	{
 		char *oldpwd = getcwd(NULL, 0);
-		char *newdir = tokens[1] == NULL ||
-							   strcmp(tokens[1], "~") == 0
+		char *newdir = tokens[1] == NULL || strcmp(tokens[1], "~") == 0
 						   ? getenv("HOME")
 						   : tokens[1];
 
 		if (newdir == NULL)
 		{
-			if (!stdout_printed)
-			{
-				printf("%s\n", oldpwd);
-				stdout_printed = 1;
-			}
+			printf("%s\n", oldpwd);
 			free(oldpwd);
-			return 0;
+			return (0);
 		}
 
 		if (strcmp(newdir, "-") == 0)
@@ -126,55 +121,25 @@ int handle_cd_command(char **tokens)
 			newdir = getenv("OLDPWD");
 			if (newdir == NULL)
 			{
-				/*if (!stdout_printed)
+				if (!stdout_printed)
 				{
 					printf("%s\n", oldpwd);
-					stdout_printed = 1;
 				}
-				free(oldpwd);*/
+				free(oldpwd);
 				return (1);
 			}
 		}
 
-		if (newdir[0] != '/')
+		if (chdir(newdir) != 0)
 		{
-			char *abs_path = (char *)malloc(strlen(oldpwd) +
-											strlen(newdir) + 2);
-			if (abs_path == NULL)
-			{
-				perror("No path specified");
-				free(oldpwd);
-				return (1);
-			}
-			snprintf(abs_path, strlen(oldpwd) + strlen(newdir) + 2,
-					 "%s/%s", oldpwd, newdir);
-
-			if (chdir(abs_path) != 0)
-			{
-				fprintf(stderr, "./hsh: 1: cd: can't cd to %s\n", newdir);
-				free(abs_path);
-				free(oldpwd);
-				return (1);
-			}
-			if (strcmp(abs_path, getenv("OLDPWD")) != 0)
-			{
-				setenv("OLDPWD", oldpwd, 1);
-			}
-
-			free(abs_path);
+			fprintf(stderr, "./hsh: 1: cd: can't cd to %s\n", newdir);
+			free(oldpwd);
+			return (1);
 		}
-		else
+
+		if (strcmp(newdir, getenv("OLDPWD")) != 0)
 		{
-			if (chdir(newdir) != 0)
-			{
-				fprintf(stderr, "./hsh: 1: cd: can't cd to %s\n", newdir);
-				free(oldpwd);
-				return (1);
-			}
-			if (strcmp(newdir, getenv("OLDPWD")) != 0)
-			{
-				setenv("OLDPWD", oldpwd, 1);
-			}
+			setenv("OLDPWD", oldpwd, 1);
 		}
 
 		free(oldpwd);
