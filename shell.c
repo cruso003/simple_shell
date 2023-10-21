@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 
 	while (1)
 	{
-		ssize_t read = get_user_input(&input, &len);
+		ssize_t read = get_user_input(&input, &len, file ? file : stdin);
 
 		if (read == -1)
 		{

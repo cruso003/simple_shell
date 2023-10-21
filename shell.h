@@ -57,7 +57,7 @@ typedef struct info
 extern char **environ;
 
 /** Function to read user input*/
-ssize_t get_user_input(char **lineptr, size_t *n);
+ssize_t get_user_input(char **lineptr, size_t *n, FILE *stream);
 
 /** Function to tokenize an input string*/
 void tokenize_string(char *input);
