@@ -10,7 +10,7 @@ int handle_builtin_commands(char **tokens)
 {
 	int i;
 	char *endptr;
-	long status;
+	long status = 0;
 
 	if (handle_cd_command(tokens))
 	{
@@ -28,15 +28,7 @@ int handle_builtin_commands(char **tokens)
 			}
 			else
 			{
-				if (WIFEXITED(status))
-				{
-					int exit_status = WEXITSTATUS(status);
-
-					if (exit_status == 2)
-					{
-						return (1);
-					}
-				}
+				exit((int)status);
 			}
 		}
 		return (1);

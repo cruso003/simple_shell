@@ -14,6 +14,8 @@ int main(int argc, char **argv)
 	size_t len = 0;
 	FILE *file;
 	char *replaced_input;
+	int status;
+	int command_not_found = 0;
 
 	(void)argc;
 	(void)argv;
@@ -50,7 +52,21 @@ int main(int argc, char **argv)
 		tokenize_string(replaced_input);
 
 		free(replaced_input);
+
+		if (command_not_found)
+		{
+			exit(2); /* Set exit status to indicate command not found*/
 		}
+		if (WIFEXITED(status))
+		{
+			int exit_status = WEXITSTATUS(status);
+
+			if (exit_status == 2)
+			{
+				return (1);
+			}
+		}
+	}
 
 	if (filename)
 	{
