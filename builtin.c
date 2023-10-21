@@ -110,8 +110,9 @@ int handle_cd_command(char **tokens)
 
 		if (newdir == NULL)
 		{
-			if (!stdout_printed)
+			if (stdout_printed)
 			{
+				printf("%s\n", oldpwd);
 				stdout_printed = 1;
 			}
 			free(oldpwd);
