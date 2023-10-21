@@ -50,6 +50,7 @@ int main(int argc, char **argv)
 		tokenize_string(replaced_input);
 
 		free(replaced_input);
+		free(input);
 	}
 
 	if (filename)

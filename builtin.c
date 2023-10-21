@@ -26,10 +26,10 @@ int handle_builtin_commands(char **tokens)
 			{
 				fprintf(stderr, "Usage: exit status\n");
 			}
-			/*else
+			else
 			{
 				exit((int)status);
-			}*/
+			}
 		}
 		else
 		{
