@@ -109,13 +109,12 @@ int handle_cd_command(char **tokens)
 
 		if (newdir == NULL)
 		{
-			if (!stdout_printed)
-			{
-				write(1, oldpwd, strlen(oldpwd));
-				stdout_printed = 0;
-			}
+			char buffer[71];
+
+			snprintf(buffer, sizeof(buffer), "%s%*s", oldpwd, 70 - (int)strlen(oldpwd), "");
+			printf("%s\n", buffer);
 			free(oldpwd);
-			return (0);
+			return (1);
 		}
 
 		if (strcmp(newdir, "-") == 0)
