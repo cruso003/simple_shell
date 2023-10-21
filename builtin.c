@@ -111,7 +111,8 @@ int handle_cd_command(char **tokens)
 		{
 			char buffer[71];
 
-			snprintf(buffer, sizeof(buffer), "%s%*s", oldpwd, 70 - (int)strlen(oldpwd), "");
+			snprintf(buffer, sizeof(buffer), "%s%*c", oldpwd, 70 - (int)strlen(oldpwd), '_');
+
 			printf("%s", buffer);
 			free(oldpwd);
 			return (1);
