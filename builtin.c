@@ -31,11 +31,6 @@ int handle_builtin_commands(char **tokens)
 				exit((int)status);
 			}
 		}
-		/*else
-		{
-			exit(0);
-		}
-		fprintf(stderr, "Usage: exit\n");*/
 		return (1);
 	}
 	else if (strcmp(tokens[0], "echo") == 0)
