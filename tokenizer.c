@@ -34,7 +34,6 @@ void execute_command(char **tokens)
 
 			if (exec_path == NULL)
 			{
-
 				exit(2);
 			}
 
@@ -47,9 +46,23 @@ void execute_command(char **tokens)
 	}
 	else
 	{
-		waitpid(child_pid, &status, 0);
+		if (wait(&status) == -1)
+		{
+			perror("wait error");
+			exit(2);
+		}
+
+		if (WIFEXITED(status))
+		{
+			int exit_status = WEXITSTATUS(status);
+			if (exit_status == 2)
+			{
+				fprintf(stderr, "error:.");
+			}
+		}
 	}
 }
+
 /**
  * tokenize_string - tokenize input string
  * @input: input string
