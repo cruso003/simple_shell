@@ -49,7 +49,7 @@ void execute_command(char **tokens)
 	{
 		if (waitpid(child_pid, &status, 0) == -1)
 		{
-			exit(2);
+			exit(EXIT_FAILURE);
 		}
 	}
 }
