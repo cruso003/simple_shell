@@ -33,7 +33,6 @@ void execute_command(char **tokens)
 
 			if (exec_path == NULL)
 			{
-				fprintf(stderr, "Command not found: %s\n", command_name);
 				exit(EXIT_FAILURE);
 			}
 
