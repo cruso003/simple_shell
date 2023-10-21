@@ -100,6 +100,8 @@ int handle_builtin_commands(char **tokens)
 int handle_cd_command(char **tokens);
 int handle_cd_command(char **tokens)
 {
+	char *current_dir;
+
 	if (strcmp(tokens[0], "cd") == 0)
 	{
 		char *oldpwd = getcwd(NULL, 0);
@@ -161,6 +163,10 @@ int handle_cd_command(char **tokens)
 		}
 
 		free(oldpwd);
+		current_dir = getcwd(NULL, 0);
+
+		printf("%s\n%s\n", current_dir, current_dir);
+		free(current_dir);
 		return (1);
 	}
 
