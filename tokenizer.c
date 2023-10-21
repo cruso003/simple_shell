@@ -47,20 +47,19 @@ void execute_command(char **tokens)
 	{
 		if (wait(&status) == -1)
 		{
-			perror("wait error");
-			exit(2);
+			exit(EXIT_FAILURE);
 		}
-
-		if (WIFEXITED(status))
+		exit(status);
+		/** if (WIFEXITED(status))
 		{
 			int exit_status = WEXITSTATUS(status);
 
 			exit(exit_status);
 			if (exit_status == 2)
 			{
-				/*exit(exit_status);*/
+				exit(exit_status);
 			}
-		}
+		} */
 	}
 }
 
