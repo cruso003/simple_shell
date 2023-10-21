@@ -100,18 +100,21 @@ int handle_builtin_commands(char **tokens)
 int handle_cd_command(char **tokens);
 int handle_cd_command(char **tokens)
 {
-	char *cwd;
+	int stdout_printed = 0;
+	char *current_dir;
 
 	if (strcmp(tokens[0], "cd") == 0)
 	{
 		char *oldpwd = getcwd(NULL, 0);
-		char *newdir = tokens[1] == NULL || strcmp(tokens[1], "~") == 0
-						   ? getenv("HOME")
-						   : tokens[1];
+		char *newdir = tokens[1] == NULL || strcmp(tokens[1], "~") == 0 ? getenv("HOME") : tokens[1];
 
 		if (newdir == NULL)
 		{
-			printf("%s\n", oldpwd);
+			if (!stdout_printed)
+			{
+				printf("%s\n", oldpwd);
+				stdout_printed = 1;
+			}
 			free(oldpwd);
 			return (0);
 		}
@@ -121,7 +124,11 @@ int handle_cd_command(char **tokens)
 			newdir = getenv("OLDPWD");
 			if (newdir == NULL)
 			{
-				fprintf(stderr, "./hsh: 1: cd: OLDPWD not set\n");
+				if (!stdout_printed)
+				{
+					printf("%s\n", oldpwd);
+					stdout_printed = 1;
+				}
 				free(oldpwd);
 				return (1);
 			}
@@ -134,10 +141,20 @@ int handle_cd_command(char **tokens)
 			return (1);
 		}
 
-		cwd = getcwd(NULL, 0);
-		printf("%s\n", cwd);
-		free(cwd);
+		current_dir = getcwd(NULL, 0);
+		if (!stdout_printed)
+		{
+			printf("%s\n", current_dir);
+			stdout_printed = 1;
+		}
+
+		if (strcmp(newdir, getenv("OLDPWD")) != 0)
+		{
+			setenv("OLDPWD", oldpwd, 1);
+		}
+
 		free(oldpwd);
+		free(current_dir);
 		return (1);
 	}
 
