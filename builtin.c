@@ -100,7 +100,7 @@ int handle_builtin_commands(char **tokens)
 int handle_cd_command(char **tokens);
 int handle_cd_command(char **tokens)
 {
-	int stdout_printed = 0;
+	char *cwd;
 
 	if (strcmp(tokens[0], "cd") == 0)
 	{
@@ -121,10 +121,7 @@ int handle_cd_command(char **tokens)
 			newdir = getenv("OLDPWD");
 			if (newdir == NULL)
 			{
-				if (!stdout_printed)
-				{
-					printf("%s\n", oldpwd);
-				}
+				fprintf(stderr, "./hsh: 1: cd: OLDPWD not set\n");
 				free(oldpwd);
 				return (1);
 			}
@@ -137,11 +134,9 @@ int handle_cd_command(char **tokens)
 			return (1);
 		}
 
-		if (strcmp(newdir, getenv("OLDPWD")) != 0)
-		{
-			setenv("OLDPWD", oldpwd, 1);
-		}
-
+		cwd = getcwd(NULL, 0);
+		printf("%s\n", cwd);
+		free(cwd);
 		free(oldpwd);
 		return (1);
 	}

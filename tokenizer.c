@@ -124,13 +124,11 @@ char *find_full_path(const char *command_name)
 	if (search_directories == NULL || search_directories[0] == '\0')
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", command_name);
-		free(path_copy);
 		return (NULL);
 	}
-
 	if (!path_copy)
 	{
-		perror("memory allocation failed");
+		fprintf(stderr, "./hsh: 1: %s: not found\n", command_name);
 		return (NULL);
 	}
 
@@ -150,7 +148,6 @@ char *find_full_path(const char *command_name)
 		directory = strtok(NULL, ":");
 	}
 
-	fprintf(stderr, "./hsh: 1: %s: not found\n", command_name);
 	free(path_copy);
 	free(path_copy_copy);
 	return (NULL);
