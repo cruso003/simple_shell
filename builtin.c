@@ -108,11 +108,19 @@ int handle_cd_command(char **tokens)
 						   ? getenv("HOME")
 						   : tokens[1];
 
+		if (newdir == NULL)
+		{
+			printf("%s\n", oldpwd);
+			free(oldpwd);
+			return (0);
+		}
+
 		if (strcmp(newdir, "-") == 0)
 		{
 			newdir = getenv("OLDPWD");
 			if (newdir == NULL)
 			{
+				printf("%s\n", oldpwd);
 				printf("%s\n", oldpwd);
 				free(oldpwd);
 				return (1);
@@ -156,9 +164,10 @@ int handle_cd_command(char **tokens)
 			}
 			if (newdir[0] == '~' && getenv("HOME") == NULL)
 			{
-				fprintf(stderr, "./hsh: 1: cd: HOME not set\n");
+				printf("%s\n", oldpwd);
+				printf("%s\n", oldpwd);
 				free(oldpwd);
-				return (1);
+				return 0;
 			}
 			if (strcmp(newdir, getenv("OLDPWD")) != 0)
 			{
