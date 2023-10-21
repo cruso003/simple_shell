@@ -111,7 +111,7 @@ int handle_cd_command(char **tokens)
 		{
 			if (!stdout_printed)
 			{
-				printf("%s\n", oldpwd);
+				write(1, oldpwd, strlen(oldpwd));
 				stdout_printed = 0;
 			}
 			free(oldpwd);
