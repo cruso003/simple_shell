@@ -31,8 +31,7 @@ int handle_builtin_commands(char **tokens)
 				exit((int)status);
 			}
 		}
-		exit(0);
-		return (1);
+		return (0);
 	}
 	else if (strcmp(tokens[0], "echo") == 0)
 	{
