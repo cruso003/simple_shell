@@ -47,6 +47,10 @@ int main(int argc, char **argv)
 		{
 			continue;
 		}
+		if (input[0] == '\0')
+		{
+			continue;
+		}
 		replaced_input = replace_variables(input);
 		tokenize_string(replaced_input);
 
