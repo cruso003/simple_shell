@@ -15,8 +15,8 @@ int main(int argc, char **argv)
 	FILE *file;
 	char *replaced_input;
 	int command_not_found = 0;
-	/*int status;
-	pid_t wait_result = wait(&status);*/
+	int status;
+	/*pid_t wait_result = wait(&status);*/
 
 	(void)argc;
 	(void)argv;
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 		{
 			perror("wait error");
 			exit(2);
-		}
+		}*/
 
 		if (WIFEXITED(status))
 		{
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 			{
 				command_not_found = 1;
 			}
-		}*/
+		}
 	}
 
 	if (filename)
