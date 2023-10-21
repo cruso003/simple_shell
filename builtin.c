@@ -10,7 +10,7 @@ int handle_builtin_commands(char **tokens)
 {
 	int i;
 	char *endptr;
-	long status = 0;
+	long status;
 
 	if (handle_cd_command(tokens))
 	{
