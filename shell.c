@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 		if (file == NULL)
 		{
 			fprintf(stderr, "/hsh: 0: Can't open %s\n", filename);
-			return (2);
+			return (EXIT_FAILURE);
 		}
 	}
 	else if (argc > 2)
