@@ -46,9 +46,9 @@ void execute_command(char **tokens)
 	{
 		if (wait(&status) == -1)
 		{
-			exit(EXIT_FAILURE);
+			exit(2);
 		}
-		_exit(status);
+		exit(status);
 		/** if (WIFEXITED(status))
 		{
 			int exit_status = WEXITSTATUS(status);
