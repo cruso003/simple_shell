@@ -49,16 +49,6 @@ int main(int argc, char **argv)
 		replaced_input = replace_variables(input);
 		tokenize_string(replaced_input);
 
-		if (WIFEXITED(status))
-		{
-			int exit_status = WEXITSTATUS(status);
-
-			if (exit_status == 2)
-			{
-				return (1);
-			}
-		}
-
 		free(replaced_input);
 	}
 
