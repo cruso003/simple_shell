@@ -75,17 +75,21 @@ void add_alias(const char *name, const char *value)
  */
 void print_aliases(const char *name)
 {
-	Alias *current = alias_list;
+    Alias *current = alias_list;
 
-	while (current != NULL)
-	{
-		if (name == NULL || (strcmp(name, current->name) == 0))
-		{
-			printf("alias %s='%s'\n", current->name, current->value);
-		}
-		current = current->next;
-	}
+    while (current != NULL)
+    {
+        if (name == NULL || (strcmp(name, current->name) == 0))
+        {
+            write(1, current->name, strlen(current->name));
+            write(1, "='", 2);
+            write(1, current->value, strlen(current->value));
+            write(1, "'\n", 2);
+        }
+        current = current->next;
+    }
 }
+
 
 /**
  * handle_alias - Handle the alias command
