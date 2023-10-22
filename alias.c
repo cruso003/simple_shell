@@ -61,11 +61,22 @@ void free_alias_list(void)
 void add_alias(const char *name, const char *value)
 {
 	Alias *new_alias = create_alias(name, value);
+	Alias *current = alias_list;
 
 	if (new_alias != NULL)
 	{
-		new_alias->next = alias_list;
-		alias_list = new_alias;
+		if (current == NULL)
+		{
+			alias_list = new_alias;
+		}
+		else
+		{
+			while (current->next != NULL)
+			{
+				current = current->next;
+			}
+			current->next = new_alias;
+		}
 	}
 }
 
