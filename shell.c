@@ -53,5 +53,6 @@ int main(int argc, char **argv)
 		fclose(file);
 	}
 	free(input);
+	free_alias_list();
 	return (EXIT_SUCCESS);
 }
