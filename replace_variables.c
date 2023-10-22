@@ -76,7 +76,10 @@ char *replace_variables(const char *input)
 					new_output[0] = '\0';
 				}
 				strcat(new_output, env_value);
-				free(replaced);
+				if (replaced)
+				{
+					free(replaced);
+				}
 				replaced = new_output;
 
 				*start = temp;
@@ -105,7 +108,10 @@ char *replace_variables(const char *input)
 			}
 			new_output[len] = *start;
 			new_output[len + 1] = '\0';
-			free(output);
+			if (output)
+			{
+				free(output);
+			}
 			output = new_output;
 		}
 

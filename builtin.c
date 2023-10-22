@@ -105,13 +105,16 @@ int handle_cd_command(char **tokens)
 	if (strcmp(tokens[0], "cd") == 0)
 	{
 		char *oldpwd = getcwd(NULL, 0);
-		char *newdir = tokens[1] == NULL || strcmp(tokens[1], "~") == 0 ? getenv("HOME") : tokens[1];
+		char *newdir = tokens[1] == NULL ||
+							   strcmp(tokens[1], "~") == 0
+						   ? getenv("HOME")
+						   : tokens[1];
 
 		if (newdir == NULL)
 		{
 			if (!stdout_printed)
 			{
-				printf("%s\n", oldpwd);
+				write(1, oldpwd, strlen(oldpwd));
 				stdout_printed = 0;
 			}
 			free(oldpwd);

@@ -2,7 +2,6 @@
 /**
  * get_user_input - get the user input from the line
  * @lineptr: the line pointer to get the user input from
- * the line
  * @n: the number of characters to get from the line
  * @stream: the stream to get the user input from
  * Return: the number of characters received
@@ -15,6 +14,7 @@ ssize_t get_user_input(char **lineptr, size_t *n, FILE *stream)
 	if (is_terminal)
 	{
 		char *prompt = "$ ";
+
 		write(1, prompt, strlen(prompt));
 	}
 

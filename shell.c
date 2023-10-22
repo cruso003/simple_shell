@@ -12,12 +12,7 @@ int main(int argc, char **argv)
 	char *filename = NULL;
 	char *input = NULL;
 	size_t len = 0;
-	FILE *file;
-	char *replaced_input;
-	int exit_status = EXIT_SUCCESS;
-
-	(void)argc;
-	(void)argv;
+	FILE *file = NULL;
 
 	if (argc == 2)
 	{
@@ -29,14 +24,13 @@ int main(int argc, char **argv)
 			return (127);
 		}
 	}
-
 	else if (argc > 2)
 	{
 		fprintf(stderr, "Usage: %s [<filename>]\n", argv[0]);
 		return (EXIT_FAILURE);
 	}
 
-	do
+	while (1)
 	{
 		ssize_t read = get_user_input(&input, &len, file ? file : stdin);
 
@@ -48,18 +42,13 @@ int main(int argc, char **argv)
 		{
 			continue;
 		}
+		tokenize_string(input);
+	}
 
-		replaced_input = replace_variables(input);
-		tokenize_string(replaced_input);
-
-		free(replaced_input);
-	} while (1);
-
-	if (filename)
+	if (file)
 	{
 		fclose(file);
 	}
-	free(input);
 
-	return (exit_status);
+	return (EXIT_SUCCESS);
 }
