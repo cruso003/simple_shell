@@ -9,11 +9,14 @@ char *replace_variables(const char *input);
 char *replace_variables(const char *input)
 {
 	char *replaced = NULL;
-	char *start = (char *)input, *output = NULL,
-		 *env_variable = NULL, *new_output, *env_value;
+	char *start = (char *)input;
+	char *output = NULL;
+	char *env_variable = NULL;
 	char temp;
 	size_t value_len, output_len, new_len, len;
 	int last_exit_status = 0;
+	char *new_output;
+	char *env_value;
 
 	while (*start)
 	{
@@ -23,17 +26,15 @@ char *replace_variables(const char *input)
 			if (start[0] == '?')
 			{
 				char str_last_exit_status[16];
-
 				sprintf(str_last_exit_status, "%d", last_exit_status);
-				env_value = str_last_exit_status;
+				env_variable = str_last_exit_status;
 				start++;
 			}
 			else if (start[0] == '$')
 			{
 				char str_pid[16];
-
 				sprintf(str_pid, "%d", getpid());
-				env_value = str_pid;
+				env_variable = str_pid;
 				start++;
 			}
 			else
@@ -45,47 +46,41 @@ char *replace_variables(const char *input)
 				}
 				if (start == env_variable)
 				{
-					free(new_output);
+					free(replaced);
 					continue;
 				}
 
 				temp = *start;
 				*start = '\0';
-
 				env_value = getenv(env_variable);
-			}
+				*start = temp;
 
-			if (env_value)
-			{
-				value_len = strlen(env_value);
-				output_len = output ? strlen(output) : 0;
-				new_len = output_len + value_len;
-
-				new_output = (char *)malloc(new_len + 1);
-				if (!new_output)
+				if (env_value)
 				{
-					perror("malloc");
+					value_len = strlen(env_value);
+					output_len = output ? strlen(output) : 0;
+					new_len = output_len + value_len;
+
+					new_output = (char *)malloc(new_len + 1);
+					if (!new_output)
+					{
+						perror("malloc");
+						free(replaced);
+						return (NULL);
+					}
+
+					if (output_len > 0)
+					{
+						strcpy(new_output, output);
+					}
+					else
+					{
+						new_output[0] = '\0';
+					}
+					strcat(new_output, env_value);
 					free(replaced);
-					return (NULL);
+					replaced = new_output;
 				}
-
-				if (output_len > 0)
-				{
-					strcpy(new_output, output);
-				}
-				else
-				{
-					new_output[0] = '\0';
-				}
-				strcat(new_output, env_value);
-				free(replaced);
-				replaced = new_output;
-
-				*start = temp;
-			}
-			else
-			{
-				*start = temp;
 			}
 		}
 
