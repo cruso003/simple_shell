@@ -82,7 +82,7 @@ void print_aliases(const char *name)
 
 	while (current != NULL)
 	{
-		if (name == NULL || (_strcmp(name, current->name) == 0))
+		if (name == NULL || (strcmp(name, current->name) == 0))
 		{
 			printf("alias %s='%s'\n", current->name, current->value);
 		}
@@ -104,8 +104,8 @@ void handle_alias(char **tokens)
 	{
 		if (strchr(tokens[1], '='))
 		{
-			char *name = custom_strtok(tokens[1], "=");
-			char *value = custom_strtok(NULL, "");
+			char *name = strtok(tokens[1], "=");
+			char *value = strtok(NULL, "");
 
 			add_alias(name, value);
 		}

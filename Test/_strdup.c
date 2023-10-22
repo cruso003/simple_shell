@@ -15,7 +15,7 @@ char *strdup(const char *str)
 	{
 		return (NULL);
 	}
-	len = strlen(str);
+	len = _strlen(str);
 	dup_str = (char *)malloc((len + 1) * sizeof(char));
 	if (dup_str == NULL)
 	{

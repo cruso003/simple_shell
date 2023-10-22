@@ -75,7 +75,7 @@ ssize_t custom_getline(char **lineptr, size_t *n);
 void *custom_realloc(void *ptr, size_t size);
 
 /** Custom function for strlen*/
-int strlen(const char *s);
+int _strlen(const char *s);
 
 /** Custom function for strcpy*/
 char *_strcpy(char *dest, const char *src);
