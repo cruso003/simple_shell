@@ -81,7 +81,7 @@ void print_aliases(const char *name)
 	{
 		if (name == NULL || (strcmp(name, current->name) == 0))
 		{
-			printf("%s='%s'\n", current->name, current->value);
+			printf("alias %s='%s'\n", current->name, current->value);
 		}
 		current = current->next;
 	}
