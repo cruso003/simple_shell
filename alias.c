@@ -1,5 +1,5 @@
 #include "shell.h"
-Alias *alias_list = NULL; 
+Alias *alias_list = NULL;
 /**
  * create_alias - Create a new alias structure
  * @name: the name of the alias structure
@@ -60,7 +60,26 @@ void free_alias_list(void)
  */
 void add_alias(const char *name, const char *value)
 {
-	Alias *new_alias = create_alias(name, value);
+	Alias *new_alias;
+	Alias *current = alias_list;
+
+	/*Check if value is an alias*/
+	while (current != NULL)
+	{
+		if (strcmp(value, current->name) == 0)
+		{
+			/*f value is an alias, set new_alias to the value of the existing alias*/
+			new_alias = create_alias(name, current->value);
+			break;
+		}
+		current = current->next;
+	}
+
+	/*If value is not an alias, set new_alias normally*/
+	if (current == NULL)
+	{
+		new_alias = create_alias(name, value);
+	}
 
 	if (new_alias != NULL)
 	{
@@ -75,21 +94,27 @@ void add_alias(const char *name, const char *value)
  */
 void print_aliases(const char *name)
 {
-    Alias *current = alias_list;
+	Alias *current = alias_list;
+	int found = 0;
 
-    while (current != NULL)
-    {
-        if (name == NULL || (strcmp(name, current->name) == 0))
-        {
-            write(1, current->name, strlen(current->name));
-            write(1, "='", 2);
-            write(1, current->value, strlen(current->value));
-            write(1, "'\n", 2);
-        }
-        current = current->next;
-    }
+	while (current != NULL)
+	{
+		if (name == NULL || (strcmp(name, current->name) == 0))
+		{
+			write(1, current->name, strlen(current->name));
+			write(1, "='", 2);
+			write(1, current->value, strlen(current->value));
+			write(1, "'\n", 2);
+			found = 1;
+		}
+		current = current->next;
+	}
+
+	if (!found)
+	{
+		printf("No alias found for '%s'\n", name);
+	}
 }
-
 
 /**
  * handle_alias - Handle the alias command
