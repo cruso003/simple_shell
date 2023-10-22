@@ -75,7 +75,7 @@ ssize_t custom_getline(char **lineptr, size_t *n);
 void *custom_realloc(void *ptr, size_t size);
 
 /** Custom function for strlen*/
-int _strlen(const char *s);
+int strlen(const char *s);
 
 /** Custom function for strcpy*/
 char *_strcpy(char *dest, const char *src);
@@ -117,7 +117,7 @@ int handle_env_command(void);
 int _strcmp(const char *s1, char *s2);
 
 /** Custom strdup function*/
-char *_strdup(const char *str);
+char *strdup(const char *str);
 
 /** Logical operator checker*/
 int logical_operator(char *arr_commands[], int l, char arr_operators[]);

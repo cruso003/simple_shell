@@ -15,14 +15,14 @@ Alias *create_alias(const char *name, const char *value)
 		perror("malloc");
 		return (NULL);
 	}
-	new_alias->name = _strdup(name);
+	new_alias->name = strdup(name);
 	if (new_alias->name == NULL)
 	{
 		perror("strdup");
 		free(new_alias);
 		return (NULL);
 	}
-	new_alias->value = _strdup(value);
+	new_alias->value = strdup(value);
 	if (new_alias->value == NULL)
 	{
 		perror("strdup");

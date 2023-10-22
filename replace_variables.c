@@ -23,6 +23,7 @@ char *replace_variables(const char *input)
 			if (start[0] == '?')
 			{
 				char str_last_exit_status[16];
+
 				sprintf(str_last_exit_status, "%d", last_exit_status);
 				env_value = str_last_exit_status;
 				start++;
@@ -30,6 +31,7 @@ char *replace_variables(const char *input)
 			else if (start[0] == '$')
 			{
 				char str_pid[16];
+
 				sprintf(str_pid, "%d", getpid());
 				env_value = str_pid;
 				start++;
@@ -51,12 +53,6 @@ char *replace_variables(const char *input)
 				*start = '\0';
 
 				env_value = getenv(env_variable);
-				if (env_value == NULL)
-				{
-					env_value = "";
-				}
-
-				*start = temp;
 			}
 
 			if (env_value)
@@ -120,5 +116,5 @@ char *replace_variables(const char *input)
 		start++;
 	}
 
-	return (replaced ? replaced : (output ? output : _strdup(input)));
+	return (replaced ? replaced : (output ? output : strdup(input)));
 }
