@@ -60,26 +60,7 @@ void free_alias_list(void)
  */
 void add_alias(const char *name, const char *value)
 {
-	Alias *new_alias;
-	Alias *current = alias_list;
-
-	/*Check if value is an alias*/
-	while (current != NULL)
-	{
-		if (strcmp(value, current->name) == 0)
-		{
-			/*f value is an alias, set new_alias to the value of the existing alias*/
-			new_alias = create_alias(name, current->value);
-			break;
-		}
-		current = current->next;
-	}
-
-	/*If value is not an alias, set new_alias normally*/
-	if (current == NULL)
-	{
-		new_alias = create_alias(name, value);
-	}
+	Alias *new_alias = create_alias(name, value);
 
 	if (new_alias != NULL)
 	{
@@ -95,7 +76,6 @@ void add_alias(const char *name, const char *value)
 void print_aliases(const char *name)
 {
 	Alias *current = alias_list;
-	int found = 0;
 
 	while (current != NULL)
 	{
@@ -105,15 +85,28 @@ void print_aliases(const char *name)
 			write(1, "='", 2);
 			write(1, current->value, strlen(current->value));
 			write(1, "'\n", 2);
-			found = 1;
 		}
 		current = current->next;
 	}
+}
+/**
+ * process_command - process command
+ * @command: command to process
+ */
+void process_command(char *command)
+{
+	Alias *current = alias_list;
 
-	if (!found)
+	while (current != NULL)
 	{
-		printf("No alias found for '%s'\n", name);
+		if (strcmp(command, current->name) == 0)
+		{
+			system(current->value);
+			return;
+		}
+		current = current->next;
 	}
+	system(command);
 }
 
 /**
@@ -122,27 +115,28 @@ void print_aliases(const char *name)
  */
 void handle_alias(char **tokens)
 {
-	if (tokens[1] == NULL)
+	int i = 1;
+
+	if (tokens[i] == NULL)
 	{
 		print_aliases(NULL);
 	}
 	else
 	{
-		if (strchr(tokens[1], '='))
+		while (tokens[i] != NULL)
 		{
-			char *name = strtok(tokens[1], "=");
-			char *value = strtok(NULL, "");
+			if (strchr(tokens[i], '='))
+			{
+				char *name = strtok(tokens[i], "=");
+				char *value = strtok(NULL, "");
 
-			add_alias(name, value);
-		}
-		else
-		{
-			int i;
-
-			for (i = 1; tokens[i] != NULL; i++)
+				add_alias(name, value);
+			}
+			else
 			{
 				print_aliases(tokens[i]);
 			}
+			i++;
 		}
 	}
 }

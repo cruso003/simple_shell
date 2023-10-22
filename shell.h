@@ -98,6 +98,8 @@ void add_alias(const char *name, const char *value);
 /** Function to print aliases (for debugging)*/
 void print_aliases(const char *name);
 
+void process_command(char *command);
+
 /** Function to handle 'the alias' command*/
 void handle_alias(char **tokens);
 
