@@ -45,11 +45,13 @@ int main(int argc, char **argv)
 		}
 		replaced_input = replace_variables(input);
 		tokenize_string(replaced_input);
+		free(replaced_input);
 	}
 
 	if (file)
 	{
 		fclose(file);
 	}
+	free(input);
 	return (EXIT_SUCCESS);
 }
