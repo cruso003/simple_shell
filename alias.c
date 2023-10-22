@@ -1,5 +1,5 @@
 #include "shell.h"
-
+Alias *alias_list = NULL; 
 /**
  * create_alias - Create a new alias structure
  * @name: the name of the alias structure
@@ -39,7 +39,6 @@ Alias *create_alias(const char *name, const char *value)
  */
 void free_alias_list(void)
 {
-	Alias *alias_list = NULL;
 	Alias *current = alias_list;
 
 	while (current != NULL)
@@ -61,7 +60,6 @@ void free_alias_list(void)
  */
 void add_alias(const char *name, const char *value)
 {
-	Alias *alias_list = NULL;
 	Alias *new_alias = create_alias(name, value);
 
 	if (new_alias != NULL)
@@ -77,7 +75,6 @@ void add_alias(const char *name, const char *value)
  */
 void print_aliases(const char *name)
 {
-	Alias *alias_list = NULL;
 	Alias *current = alias_list;
 
 	while (current != NULL)
