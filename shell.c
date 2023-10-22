@@ -13,6 +13,7 @@ int main(int argc, char **argv)
 	char *input = NULL;
 	size_t len = 0;
 	FILE *file = NULL;
+	char *replaced_input;
 
 	if (argc == 2)
 	{
@@ -42,13 +43,13 @@ int main(int argc, char **argv)
 		{
 			continue;
 		}
-		tokenize_string(input);
+		replaced_input = replace_variables(input);
+		tokenize_string(replaced_input);
 	}
 
 	if (file)
 	{
 		fclose(file);
 	}
-
 	return (EXIT_SUCCESS);
 }

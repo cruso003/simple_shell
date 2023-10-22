@@ -85,6 +85,7 @@ void tokenize_string(char *input)
 		if (token[0] == '#')
 		{
 			break;
+			free(token);
 		}
 		tokens[token_count] = strdup(token);
 		if (!tokens[token_count])

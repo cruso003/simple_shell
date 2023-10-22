@@ -57,15 +57,17 @@ char *replace_variables(const char *input)
 
 			if (env_value)
 			{
-				value_len = strlen(env_value);
-				output_len = output ? strlen(output) : 0;
+				value_len = _strlen(env_value);
+				output_len = output ? _strlen(output) : 0;
 				new_len = output_len + value_len;
 
-				if (new_output)
-				{
-					free(new_output);
-				}
 				new_output = (char *)malloc(new_len + 1);
+				if (!new_output)
+				{
+					perror("malloc");
+					free(replaced);
+					return (NULL);
+				}
 
 				if (output_len > 0)
 				{
@@ -76,10 +78,7 @@ char *replace_variables(const char *input)
 					new_output[0] = '\0';
 				}
 				strcat(new_output, env_value);
-				if (replaced)
-				{
-					free(replaced);
-				}
+				free(replaced);
 				replaced = new_output;
 
 				*start = temp;
@@ -92,12 +91,14 @@ char *replace_variables(const char *input)
 
 		if (!replaced)
 		{
-			len = output ? strlen(output) : 0;
-			if (new_output)
-			{
-				free(new_output);
-			}
+			len = output ? _strlen(output) : 0;
 			new_output = (char *)malloc(len + 2);
+			if (!new_output)
+			{
+				perror("malloc");
+				free(replaced);
+				return (NULL);
+			}
 			if (len > 0)
 			{
 				strcpy(new_output, output);
@@ -108,15 +109,12 @@ char *replace_variables(const char *input)
 			}
 			new_output[len] = *start;
 			new_output[len + 1] = '\0';
-			if (output)
-			{
-				free(output);
-			}
+			free(output);
 			output = new_output;
 		}
 
 		start++;
 	}
 
-	return (replaced ? replaced : (output ? output : strdup(input)));
+	return (replaced ? replaced : (output ? output : _strdup(input)));
 }
